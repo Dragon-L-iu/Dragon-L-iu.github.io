@@ -30,62 +30,73 @@
 			.head_d{
 				width: 100%;
 				height: 60px;
-				float: left;
 				opacity: 0.5;
 				background: white;
-				position: fixed;
 				}
 
 			.head_dr{
 				font-size: 30px;
 				margin-left: 15px;
 				margin-top: 7px;
-				color: #FFFFFF;
+				color: black;
 				opacity: initial;
 				float: left;
-				cursor: pointer;
+				text-decoration: none;
+				position: fixed;
 			}
 			.head_adress1{
-				font-size: 20px;
+				font-size: 16px;
 				margin-right: 15px;
-				margin-top: 15px;
-				color: #FFFFFF;
+				margin-top: 18px;
+				color: black;
 				float: right;
 				text-decoration: none;
 			}			
 			.head_adress2{
-				font-size: 20px;
+				font-size: 16px;
 				margin-right: 15px;
-				margin-top: 15px;
-				color: #FFFFFF;
+				margin-top: 18px;
+				color: black;
 				float: right;
 				text-decoration: none;
 			}
 			.content_line{
 				margin: auto;
 				margin-top: 30px;
-				margin-left: auto;
-				margin-right: auto;
+				margin-left: 15px;
+				margin-right: 15px;
 				margin-bottom: 0px;
-				width: 100%;
+				width: auto;
 				height: 400px;
-				background-color: #B6BAC3;
+				background-color: white;
+				text-align: center;
 			}
 			.content_left{
 				float: left;
 				width: 40%;
 				height: 100%;
+				border-radius: 15px;
 				background: blueviolet;
-				border-radius: 20px;
-				margin-left: 15px;
+				opacity: 0.3;
+			}
+			.content_left_con{
+				font-size: 60px;
+				text-align: center;
+				margin-top: 150px;
+			}
+			.content_right_con{
+				font-size: 60px;
+				text-align: center;
+				margin-top: 150px;
 			}
 			.content_right{
 				float: right;
-				width: 56%;
+				position: relative;
+				width: 60%;
 				height: 100%;
+				border-radius: 15px;
 				background: bisque;
-				border-radius: 20px;
-				margin-right: 15px;
+				opacity: 0.3;
 			}
 			.foot_line{
 				text-align: center;
@@ -93,29 +104,34 @@
 				color: #B6BAC3;
 				margin-top: 50px;
 				padding-bottom: 10px;
-				background: bisque;
+				background: whitesmoke;
 			}
-			.foot_line.foot{
-				
+			.foot{
+				margin-top: 5px;
 			}
 		</style>
 	</head>
 	<body>
 		<div class="background">
 			<div class="head_line">
-				<div class="head_d"></div>
+				<div class="head_d">
 				<a class="head_dr" href="dragon.html">DRAGON</a>
 				<a class="head_adress1" href="https://space.bilibili.com/290386511">我的CSDN</a>
-				<a class="head_adress2" href="https://me.csdn.net/dragoned_123">我的B站</a>
+				<a class="head_adress2" href="https://me.csdn.net/dragoned_123">我的B站</a>	
+				</div>
 			</div>
 		</div>
 		
 		<div class="content_line">
 			<div class="content_left">
-				文章
+				<dir class="content_left_con">
+					文章
+				</dir>
 			</div>
 			<div class="content_right">
-				视频
+				<dir class="content_right_con">
+					视频
+				</dir>
 			</div>
 		</div>
 		
