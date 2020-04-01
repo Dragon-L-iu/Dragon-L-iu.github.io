@@ -1,4 +1,4 @@
-.content_line{
+.content_line {
 	margin: auto;
 	margin-top: 20px;
 	margin-left: 15px;
@@ -9,33 +9,109 @@
 	background-color: white;
 	text-align: center;
 }
-.content_left{
+
+.content_left {
 	float: left;
 	width: 40%;
 	height: 100%;
 	border-radius: 15px;
-	background: rgba(160,32,240,0.4);
+	background: rgba(160, 32, 240, 0.4);
 }
-.content_left_con{
+
+.content_left_con {
 	font-size: 60px;
 	text-align: center;
 	margin-top: 20px;
 }
-.content_right_con{
+
+.content_right_con {
 	font-size: 60px;
 	text-align: center;
-	margin-top: 150px;
+	margin-top: 15px;
 }
-.content_right{
+
+.content_right {
 	float: right;
 	position: relative;
 	width: 60%;
 	height: 100%;
 	border-radius: 15px;
 	background: bisque;
-	opacity: 0.3;
 }
 
+.video_line{
+	background: #005CC5;
+	margin-left: 30px;
+}
+.small-item {
+	display: block;
+	float: left;
+	width: 160px;
+	position: relative;
+	margin: 0 0 3px;
+	padding: 10px;
+	font-family: Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+	color: #222;
+	font-size: 12px;
+	line-height: 1.7em;
+}
+
+.fakeDanmu-item .length {
+    z-index: 5;
+    transition: background .2s ease;
+}
+
+.small-item .length {
+	background: #111;
+	background:
+		rgba(0, 0, 0, .5);
+	border-radius: 5px 0 0 0;
+	color:
+		#fff;
+	line-height: 20px;
+	transition: top .2s ease;
+	padding: 0 6px;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
+.small-item .cover {
+    background: url(//s1.hdslb.com/bfs/static/jinkela/space/asserts/video-placeholder.png) 50%;
+        background-size: auto;
+    background-size: cover;
+    border-radius: 4px;
+    display: block;
+    width: 160px;
+    height: 100px;
+    overflow: hidden;
+    color: inherit;
+    text-decoration: none;
+    transition: color .2s ease,background-color .2s ease;
+    position: relative;
+}
+.small-item .title {
+    display: block;
+    line-height: 20px;
+    height: 38px;
+    margin-top: 6px;
+    overflow: hidden;
+}
+.small-item .meta {
+    color: #999;
+    white-space: nowrap;
+    font-size: 0;
+    margin-top: 6px;
+    height: 14px;
+    line-height: 14px;
+}
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color .2s ease,background-color .2s ease;
+}
+a:hover{
+	color: #005CC5;
+}
 .content_line1 {
 	margin-top: 20px;
 	margin-left: 15px;
@@ -47,14 +123,16 @@
 	text-align: left;
 	border-radius: 15px;
 	background: white;
-	background: rgba(255,250,240,0.9);
+	background: rgba(255, 250, 240, 0.9);
 	display: block;
 }
+
 .context {
 	font: 20px Capital, futura-pt, Helvetica, Arial, sans-serif;
 	text-decoration: none;
 	color: #000000;
 }
+
 .context:hover {
 	color: #FF7F24;
 	transition-duration: 200ms;
