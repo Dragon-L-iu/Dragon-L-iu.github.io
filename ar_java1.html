@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 	<head>
@@ -439,4 +440,447 @@
 		</div>
 
 	</body>
+=======
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" href="css/mark-style/atomonedark.css" type="text/css" charset="UTF-8" />
+		<link rel="stylesheet" href="css/mark-style/prism.css" type="text/css" charset="UTF-8" />
+		<link rel="stylesheet" href="css/mark-style/style.css" type="text/css" charset="UTF-8" />
+		<script src="js/prism.js" type="text/javascript" charset="UTF-8"></script>
+	</head>
+	<body>
+		<div class="head">
+			<div class="background_cont">
+				<div class="background_cont_title">
+					<div class="background_cont_title_cont">CRC循环冗余检测风暴引起的二进制除法如何计算</div>
+				</div>
+			</div>
+		</div>
+		<div class="markdown-body">
+			<h1>汉明码（海明码）</h1>
+			<h2>为什么有汉明码？</h2>
+			<p>在计算机存储中，可能受其它原因，导致存储出现错误，0变成1，1变成0，存放数据以汉明码的方式存储，可以进行数据的校正，具有<strong>一位纠错能力</strong>。</p>
+			<p>&nbsp;</p>
+			<h2>分组校验</h2>
+			<p>在介绍汉明码之前举一个例子说明一下分组校验：比如有一个字节的数据 1000 0101</p>
+			<p><mark>黄色</mark>为检验位</p>
+			<figure>
+				<table>
+					<thead>
+						<tr>
+							<th style='text-align:left;'>数据</th>
+							<th style='text-align:left;'>说明</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style='text-align:left;'><mark>1</mark> 1010 0001</td>
+							<td style='text-align:left;'>该数据1的个数为<mark>奇数</mark>，则可以得知1010 0001里面某一位出现错误</td>
+						</tr>
+						<tr>
+							<td style='text-align:left;'><mark>0</mark>1010 <mark>1</mark> 0001</td>
+							<td style='text-align:left;'>该数据1的个数为<mark>奇数</mark>，则可以得知1010 或0001里面某一位出现错误</td>
+						</tr>
+					</tbody>
+				</table>
+			</figure>
+			<p>从表格中可以看出如果添加的检测位越多可以找到出错的范围越精确，当然这种分组校验组和组之间是不重复的，而海明码的组和组之间是重复的，很巧妙的重复能够精确的找到哪一位出现了错误。</p>
+			<h2>汉明码的原理</h2>
+			<p>将要进行检测的二进制代码为n位，为使其具有纠错能力，需要再加上k位的检测位，组成n+k位的代码。那么，新增加的检测位数k应满足：2k≥n+k+1</p>
+			<p>&nbsp;</p>
+			<h3>添加检测位数</h3>
+			<div contenteditable="true" spellcheck="false" class="mathjax-block md-end-block md-math-block md-rawblock" id="mathjax-n266"
+			 cid="n266" mdtype="math_block">
+				<div class="md-rawblock-container md-math-container" tabindex="-1">
+					<div class="MathJax_SVG_Display" style="text-align: center;"><span class="MathJax_SVG" id="MathJax-Element-15-Frame"
+						 tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink"
+							 width="14.79ex" height="2.694ex" viewBox="0 -956.9 6367.8 1160" role="img" focusable="false" style="vertical-align: -0.472ex; max-width: 100%;"
+							 class="in-text-selection">
+								<defs>
+									<path stroke-width="0" id="E27-MJMAIN-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path>
+									<path stroke-width="0" id="E27-MJMATHI-6B" d="M121 647Q121 657 125 670T137 683Q138 683 209 688T282 694Q294 694 294 686Q294 679 244 477Q194 279 194 272Q213 282 223 291Q247 309 292 354T362 415Q402 442 438 442Q468 442 485 423T503 369Q503 344 496 327T477 302T456 291T438 288Q418 288 406 299T394 328Q394 353 410 369T442 390L458 393Q446 405 434 405H430Q398 402 367 380T294 316T228 255Q230 254 243 252T267 246T293 238T320 224T342 206T359 180T365 147Q365 130 360 106T354 66Q354 26 381 26Q429 26 459 145Q461 153 479 153H483Q499 153 499 144Q499 139 496 130Q455 -11 378 -11Q333 -11 305 15T277 90Q277 108 280 121T283 145Q283 167 269 183T234 206T200 217T182 220H180Q168 178 159 139T145 81T136 44T129 20T122 7T111 -2Q98 -11 83 -11Q66 -11 57 -1T48 16Q48 26 85 176T158 471L195 616Q196 629 188 632T149 637H144Q134 637 131 637T124 640T121 647Z"></path>
+									<path stroke-width="0" id="E27-MJAMS-2A7E" d="M83 616Q83 624 89 630T99 636Q107 636 253 568T543 431T687 361Q694 356 694 346T687 331Q685 329 395 192L107 56H101Q83 58 83 76Q83 77 83 79Q82 86 98 95Q117 105 248 167Q326 204 378 228L626 346L360 472Q291 505 200 548Q112 589 98 597T83 616ZM674 172Q692 172 694 154Q694 142 687 137Q685 135 395 -2L107 -138H101Q83 -136 83 -118Q83 -106 96 -100Q100 -98 380 35T665 170T674 172Z"></path>
+									<path stroke-width="0" id="E27-MJMATHI-6E" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path>
+									<path stroke-width="0" id="E27-MJMAIN-2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path>
+									<path stroke-width="0" id="E27-MJMAIN-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path>
+								</defs>
+								<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)">
+									<use xlink:href="#E27-MJMAIN-32" x="0" y="0"></use>
+									<use transform="scale(0.707)" xlink:href="#E27-MJMATHI-6B" x="707" y="583"></use>
+									<use xlink:href="#E27-MJAMS-2A7E" x="1246" y="0"></use>
+									<use xlink:href="#E27-MJMATHI-6E" x="2301" y="0"></use>
+									<use xlink:href="#E27-MJMAIN-2B" x="3124" y="0"></use>
+									<use xlink:href="#E27-MJMATHI-6B" x="4124" y="0"></use>
+									<use xlink:href="#E27-MJMAIN-2B" x="4867" y="0"></use>
+									<use xlink:href="#E27-MJMAIN-31" x="5867" y="0"></use>
+								</g>
+							</svg></span></div>
+					<script type="math/tex; mode=display" id="MathJax-Element-15">2^k \geqslant n+k+1</script>
+				</div>
+			</div>
+			<p>比如：二进制数据有4位 1011匿名检测位需要3位，因为2<sup>3</sup> = 4+3+1</p>
+			<h3>检测位置</h3>
+			<div contenteditable="true" spellcheck="false" class="mathjax-block md-end-block md-math-block md-rawblock" id="mathjax-n270"
+			 cid="n270" mdtype="math_block">
+				<div class="md-rawblock-container md-math-container" tabindex="-1">
+					<div class="MathJax_SVG_Display" style="text-align: center;"><span class="MathJax_SVG" id="MathJax-Element-16-Frame"
+						 tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink"
+							 width="32.303ex" height="2.928ex" viewBox="0 -956.9 13908 1260.5" role="img" focusable="false" style="vertical-align: -0.705ex; max-width: 100%;"
+							 class="in-text-selection">
+								<defs>
+									<path stroke-width="0" id="E28-MJMAIN-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path>
+									<path stroke-width="0" id="E28-MJMAIN-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path>
+									<path stroke-width="0" id="E28-MJMATHI-69" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path>
+									<path stroke-width="0" id="E28-MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path>
+									<path stroke-width="0" id="E28-MJMAIN-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path>
+									<path stroke-width="0" id="E28-MJMAIN-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path>
+									<path stroke-width="0" id="E28-MJMAIN-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path>
+									<path stroke-width="0" id="E28-MJMAIN-33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path>
+									<path stroke-width="0" id="E28-MJMAIN-34" d="M462 0Q444 3 333 3Q217 3 199 0H190V46H221Q241 46 248 46T265 48T279 53T286 61Q287 63 287 115V165H28V211L179 442Q332 674 334 675Q336 677 355 677H373L379 671V211H471V165H379V114Q379 73 379 66T385 54Q393 47 442 46H471V0H462ZM293 211V545L74 212L183 211H293Z"></path>
+									<path stroke-width="0" id="E28-MJMAIN-2E" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z"></path>
+									<path stroke-width="0" id="E28-MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path>
+								</defs>
+								<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><text
+									 font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none" transform="scale(50.259) matrix(1 0 0 -1 0 0)">位</text>
+									<g transform="translate(804,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+										 transform="scale(50.259) matrix(1 0 0 -1 0 0)">置</text></g>
+									<g transform="translate(1608,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+										 transform="scale(50.259) matrix(1 0 0 -1 0 0)">序</text></g>
+									<g transform="translate(2412,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+										 transform="scale(50.259) matrix(1 0 0 -1 0 0)">号</text></g>
+									<use xlink:href="#E28-MJMAIN-3D" x="3494" y="0"></use>
+									<g transform="translate(4550,0)">
+										<use xlink:href="#E28-MJMAIN-32" x="0" y="0"></use>
+										<use transform="scale(0.707)" xlink:href="#E28-MJMATHI-69" x="707" y="583"></use>
+									</g>
+									<use xlink:href="#E28-MJMAIN-28" x="5394" y="0"></use>
+									<use xlink:href="#E28-MJMATHI-69" x="5783" y="0"></use>
+									<use xlink:href="#E28-MJMAIN-3D" x="6405" y="0"></use>
+									<use xlink:href="#E28-MJMAIN-30" x="7461" y="0"></use>
+									<use xlink:href="#E28-MJMAIN-2C" x="7961" y="0"></use>
+									<use xlink:href="#E28-MJMAIN-31" x="8406" y="0"></use>
+									<use xlink:href="#E28-MJMAIN-2C" x="8906" y="0"></use>
+									<use xlink:href="#E28-MJMAIN-32" x="9350" y="0"></use>
+									<use xlink:href="#E28-MJMAIN-2C" x="9850" y="0"></use>
+									<use xlink:href="#E28-MJMAIN-33" x="10295" y="0"></use>
+									<use xlink:href="#E28-MJMAIN-2C" x="10795" y="0"></use>
+									<use xlink:href="#E28-MJMAIN-34" x="11240" y="0"></use>
+									<use xlink:href="#E28-MJMAIN-2C" x="11740" y="0"></use>
+									<use xlink:href="#E28-MJMAIN-2E" x="12184" y="0"></use>
+									<use xlink:href="#E28-MJMAIN-2E" x="12629" y="0"></use>
+									<use xlink:href="#E28-MJMAIN-2E" x="13074" y="0"></use>
+									<use xlink:href="#E28-MJMAIN-29" x="13518" y="0"></use>
+								</g>
+							</svg></span></div>
+					<script type="math/tex; mode=display" id="MathJax-Element-16">位置序号=2^i(i=0,1,2,3,4,...)</script>
+				</div>
+			</div>
+			<p>如果有3个检测位，参考下面表格</p>
+			<figure>
+				<table>
+					<thead>
+						<tr>
+							<th>位置序号</th>
+							<th>1</th>
+							<th>2</th>
+							<th>3</th>
+							<th>4</th>
+							<th>5</th>
+							<th>6</th>
+							<th>7</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>二进制数据</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>1</td>
+							<td>&nbsp;</td>
+							<td>0</td>
+							<td>1</td>
+							<td>1</td>
+						</tr>
+						<tr>
+							<td>说明</td>
+							<td><mark>检测位</mark></td>
+							<td><mark>检测位</mark></td>
+							<td>数据位</td>
+							<td><mark>检测位</mark></td>
+							<td>数据位</td>
+							<td>数据位</td>
+							<td>数据位</td>
+						</tr>
+					</tbody>
+				</table>
+			</figure>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<h3>分组原理</h3>
+			<p>3个检测位，每个检测位划分一个组，第1组有1，3，5，7位；第2组有2，3，6，7位；第3组有4，5，6，7位。</p>
+			<p><img src="https://img-blog.csdnimg.cn/20200314153952241.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2RyYWdvbmVkXzEyMw==,size_16,color_FFFFFF,t_70"
+				 referrerpolicy="no-referrer" alt="在这里插入图片描述"></p>
+			<figure>
+				<table>
+					<thead>
+						<tr>
+							<th>位置序号</th>
+							<th>用2<sup>i</sup> (i=0,1,2)分解</th>
+							<th>包含二进制形式</th>
+							<th>所属组</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>3</td>
+							<td>1+2</td>
+							<td>xx1，x1x</td>
+							<td>1，2</td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td>1+4</td>
+							<td>xx1，1xx</td>
+							<td>1，3</td>
+						</tr>
+						<tr>
+							<td>6</td>
+							<td>2+4</td>
+							<td>x1x，1xx</td>
+							<td>2，3</td>
+						</tr>
+						<tr>
+							<td>7</td>
+							<td>1+2+4</td>
+							<td>xx1，x1x，1xx</td>
+							<td>1，2，3</td>
+						</tr>
+					</tbody>
+				</table>
+			</figure>
+			<figure>
+				<table>
+					<thead>
+						<tr>
+							<th>分组</th>
+							<th>检测位序号</th>
+							<th>二进制形式</th>
+							<th>转换成十进制的位置序号</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>1（2<sup>0</sup>）</td>
+							<td>xx1</td>
+							<td>1，3，5，7</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>2（2<sup>1</sup>）</td>
+							<td>x1x</td>
+							<td>2，3，6，7</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>4（2<sup>2</sup>）</td>
+							<td>1xx</td>
+							<td>3，5，6，7</td>
+						</tr>
+						<tr>
+							<td>...</td>
+							<td>...</td>
+							<td>...</td>
+							<td>...</td>
+						</tr>
+					</tbody>
+				</table>
+			</figure>
+			<p>&nbsp;</p>
+			<h2>如何编码？</h2>
+			<h3>检测取值</h3>
+			<p>检测位的取值和该位所在的检测组的奇偶校验方式有关。</p>
+			<ul>
+				<li>偶校验：该检测组的1的个数（不包括检测位）为偶数时，检测位为0，为奇数时检测位为1</li>
+				<li>奇校验：该检测组的1的个数（不包括检测位）为偶数时，检测位为1，为奇数时检测位为0</li>
+
+			</ul>
+			<p>偶校验</p>
+			<figure>
+				<table>
+					<thead>
+						<tr>
+							<th>位置序号</th>
+							<th>1</th>
+							<th>2</th>
+							<th>3</th>
+							<th>4</th>
+							<th>5</th>
+							<th>6</th>
+							<th>7</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>二进制数据</td>
+							<td>0</td>
+							<td>1</td>
+							<td>1</td>
+							<td>0</td>
+							<td>0</td>
+							<td>1</td>
+							<td>1</td>
+						</tr>
+						<tr>
+							<td>说明</td>
+							<td><mark>检测位</mark></td>
+							<td><mark>检测位</mark></td>
+							<td>数据位</td>
+							<td><mark>检测位</mark></td>
+							<td>数据位</td>
+							<td>数据位</td>
+							<td>数据位</td>
+						</tr>
+					</tbody>
+				</table>
+			</figure>
+			<p>奇校验</p>
+			<figure>
+				<table>
+					<thead>
+						<tr>
+							<th>位置序号</th>
+							<th>1</th>
+							<th>2</th>
+							<th>3</th>
+							<th>4</th>
+							<th>5</th>
+							<th>6</th>
+							<th>7</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>二进制数据</td>
+							<td>1</td>
+							<td>0</td>
+							<td>1</td>
+							<td>1</td>
+							<td>0</td>
+							<td>1</td>
+							<td>1</td>
+						</tr>
+						<tr>
+							<td>说明</td>
+							<td><mark>检测位</mark></td>
+							<td><mark>检测位</mark></td>
+							<td>数据位</td>
+							<td><mark>检测位</mark></td>
+							<td>数据位</td>
+							<td>数据位</td>
+							<td>数据位</td>
+						</tr>
+					</tbody>
+				</table>
+			</figure>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<h2>如何校验？</h2>
+			<p>给出一段7位<mark>奇校验</mark>海明码，在上面数据基础上把6号位的1变为0</p>
+			<figure>
+				<table>
+					<thead>
+						<tr>
+							<th>位置序号</th>
+							<th>1</th>
+							<th>2</th>
+							<th>3</th>
+							<th>4</th>
+							<th>5</th>
+							<th>6</th>
+							<th>7</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>二进制数据</td>
+							<td>1</td>
+							<td>0</td>
+							<td>1</td>
+							<td>1</td>
+							<td>0</td>
+							<td>0</td>
+							<td>1</td>
+						</tr>
+						<tr>
+							<td>说明</td>
+							<td><mark>检测位</mark></td>
+							<td><mark>检测位</mark></td>
+							<td>数据位</td>
+							<td><mark>检测位</mark></td>
+							<td>数据位</td>
+							<td>数据位</td>
+							<td>数据位</td>
+						</tr>
+					</tbody>
+				</table>
+			</figure>
+			<p>开始校验</p>
+			<figure>
+				<table>
+					<thead>
+						<tr>
+							<th>位置</th>
+							<th>相应检测位和数据位</th>
+							<th>1的个数（包含检测位）</th>
+							<th>结果</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>p4</td>
+							<td>4，5，6，7</td>
+							<td>2（偶）</td>
+							<td>1</td>
+						</tr>
+						<tr>
+							<td>p2</td>
+							<td>2，3，6，7</td>
+							<td>2（偶）</td>
+							<td>1</td>
+						</tr>
+						<tr>
+							<td>p1</td>
+							<td>1，3，5，7</td>
+							<td>3（奇）</td>
+							<td>0</td>
+						</tr>
+					</tbody>
+				</table>
+			</figure>
+			<p>把位置从大到小排列并写出相应的结果 110 转换成10进制就是6，所以6号位置的数据出错,不同的结果以此类推。</p>
+			<p>注意：
+				<mark>把3个位置从大到小排列并写出相应的结果</mark>
+				在校验过程中，可以有3种判断方法：</p>
+			<p>1.<mark>查找相应检测位和数据位1的个数找奇偶</mark>，如果个数为偶，在偶校验里面为0，奇校验中为1；如果个数为奇，在偶校验里面为1，奇校验中为0</p>
+			<p>2.<mark>直接相加相应检测位和数据位看数值的奇偶</mark>，如果个数为偶，在偶校验里面为0，奇校验中为1；如果个数为奇，在偶校验里面为1，奇校验中为0</p>
+			<p>3.<mark>相应检测位和数据位进行异或运算</mark>，偶校验直接是异或运算结果，奇校验还要对结果取反。</p>
+
+			<script>
+				document.write('<script src="//' + (location.host || 'localhost').split(':')[0] +
+					':35929/livereload.js?snipver=1"></' + 'script>')
+			</script>
+			<script>
+				document.addEventListener('LiveReloadDisconnect', function() {
+					setTimeout(function() {
+						window.location.reload();
+					}, 500);
+				})
+			</script>
+		</div>
+
+	</body>
+>>>>>>> e7ae3e7eb56dd6bc0cc9b55664029fbb4239bc72
 </html>

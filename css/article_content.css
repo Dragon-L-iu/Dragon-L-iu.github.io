@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 * {
 	padding: 0;
 	margin: 0;
@@ -104,4 +105,112 @@ td {
 
 .foot {
 	margin-top: 5px;
+=======
+* {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	font-family: "microsoft yahei";
+	font-size: 14px;
+}
+
+div {
+	display: block;
+}
+
+p {
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+
+h1 {
+	margin-top: 10px;
+	margin-bottom: 15px;
+}
+
+h2 {
+	margin-top: 5px;
+	margin-bottom: 15px;
+}
+
+.language-java{
+}
+.background {
+	position: relative;
+	background: url(../img/ar_con_photo1.jpg);
+	width: 100%;
+	height: 300px;
+	background-size: cover;
+}
+
+tr {
+	border
+}
+
+th {
+	text-align: left;
+}
+
+td {
+	text-align: left;
+}
+
+.background_cont {
+	position: relative;
+	width: 1100px;
+	height: 300px;
+	background: rgba(182, 186, 195, 0.7);
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 15px;
+}
+
+.background_cont_title {
+	position: absolute;
+	margin-top: 140px;
+	width: 100%;
+	height: auto;
+}
+
+.background_cont_title_cont {
+	font-family: "microsoft sans serif";
+	font-size: 60px;
+	padding-left: 20px;
+	float: left;
+}
+
+.content {
+	position: relative;
+	background: rgba(182, 186, 195, 0.3);
+	margin-top: 15px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 1100px;
+	border-radius: 15px;
+	height: auto;
+}
+
+.content_con {
+	position: relative;
+	margin-left: 25px;
+	margin-right: 25px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	text-align: left;
+}
+
+.foot_line {
+	text-align: center;
+	font-size: 12px;
+	color: #B6BAC3;
+	margin-top: 30px;
+	padding-bottom: 10px;
+	background: whitesmoke;
+}
+
+.foot {
+	margin-top: 5px;
+>>>>>>> e7ae3e7eb56dd6bc0cc9b55664029fbb4239bc72
 }
