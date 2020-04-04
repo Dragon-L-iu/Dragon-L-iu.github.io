@@ -9,3 +9,6 @@ body{
 div{
 	display: block;
 }
+html{
+	filter: grayscale(1);
+}
