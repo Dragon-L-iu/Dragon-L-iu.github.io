@@ -23,13 +23,13 @@
 						</div>
 						<div class="background_wel_b_text">
 							<a class="background_wel_b_text_a" href="#linux"> linux</a>
-							</div>
+						</div>
 						<div class="background_wel_b_text">
 							<a class="background_wel_b_text_a" href="#suanfa"> 算法</a>
-							</div>
+						</div>
 						<div class="background_wel_b_text">
 							<a class="background_wel_b_text_a" href="#other"> 其它</a>
-							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -107,6 +107,21 @@
 		<div class="content">
 			<div class="cintent_title" id="linux">
 				Linux
+			</div>
+			<div class="content_line" >
+				<a class="context" href="ar6.html" target="_blank">
+					Linux的CFS(完全公平调度)算法你了解多少（基于Linux2.6.34.1）
+				</a>
+				<br />
+				<p class="context_con">
+					前提知识
+					虚拟运行时间（vruntime）
+					vruntime其实是一个带权的运行时间，利用权值来控制时间的快慢，
+					而控制时间快慢的方法是使用nice值，nice也叫做时间衰减系数，
+					这是一个具体的数字，取值范围在[-20，19]。优先级低的->更高的衰减系数，
+					优先级高的->更低的衰减系数。
+					nice的值可以使用全局变量prio_to_weight转换，nice值越低，权重越大。
+				</p>
 			</div>
 			<div class="content_line" >
 				<a class="context" href="https://blog.csdn.net/dragoned_123/article/details/104750427" target="_blank">

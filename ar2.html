@@ -16,7 +16,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="markdown-body">
+		<div class="markdown-body" id='mb'>
 			<h1 id="crc-">CRC循环冗余检测风暴引起的二进制除法如何计算</h1>
 			<p>谈二进制除法之前，先回忆一下十进制之间的除法是如何运算的，</p>
 			<p><img src="C:\Users\lenovo\Desktop\snipaste20200320_135932.png" alt=""></p>
@@ -137,18 +137,18 @@
 				<li>长度为(n - k + 1)的突发差错片段，这个片段等于(1-2-(n-k-1))。</li>
 				<li>长度大于(n - k + 1)的突发差错片段，这个片段等于(1 - 2-(n-k))</li>
 			</ul>
-			<script>
-				document.write('<script src="//' + (location.host || 'localhost').split(':')[0] +
-					':35929/livereload.js?snipver=1"></' + 'script>')
-			</script>
-			<script>
-				document.addEventListener('LiveReloadDisconnect', function() {
-					setTimeout(function() {
-						window.location.reload();
-					}, 500);
-				})
-			</script>
 		</div>
-
+		<script>
+			var bod = document.getElementById('mb');
+			var ht = document.body
+			bod.onmouseover = function(){
+				this.className = 'markdown-body markdown-body1';
+				ht.bgColor = '#e3edcd'
+			}
+			bod.onmouseout = function(){
+				this.className = 'markdown-body';
+				ht.bgColor = '#FFFFFF'
+			}	
+		</script>
 	</body>
 </html>

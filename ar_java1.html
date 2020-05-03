@@ -15,7 +15,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="markdown-body">
+		<div class="markdown-body" id='mb'>
 			<h1>汉明码（海明码）</h1>
 			<h2>为什么有汉明码？</h2>
 			<p>在计算机存储中，可能受其它原因，导致存储出现错误，0变成1，1变成0，存放数据以汉明码的方式存储，可以进行数据的校正，具有<strong>一位纠错能力</strong>。</p>
@@ -437,6 +437,17 @@
 				})
 			</script>
 		</div>
-
+		<script>
+			var bod = document.getElementById('mb');
+			var ht = document.body
+			bod.onmouseover = function(){
+				this.className = 'markdown-body markdown-body1';
+				ht.bgColor = '#e3edcd'
+			}
+			bod.onmouseout = function(){
+				this.className = 'markdown-body';
+				ht.bgColor = '#FFFFFF'
+			}	
+		</script>
 	</body>
 </html>

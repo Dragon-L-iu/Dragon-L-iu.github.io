@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="css/mark-style/atomonedark.css" type="text/css" charset="UTF-8" />
+		<link rel="stylesheet" href="css/mark-style/prism.css" type="text/css" charset="UTF-8" />
+		<link rel="stylesheet" href="css/mark-style/style.css" type="text/css" charset="UTF-8" />
+		<script src="js/ar_change.js" type="text/javascript" charset="UTF-8"></script>
+		<title>文章</title>
+	</head>
+
+	<body>
+		<div class="head">
+			<div class="background_cont">
+				<div class="background_cont_title">
+					<div class="background_cont_title_cont">Linux的CFS(完全公平调度)算法你了解多少（基于Linux2.6.34.1）</div>
+				</div>
+			</div>
+		</div>
+		<div class="markdown-body" id="mb">
+			<h1>Linux的CFS(完全公平调度)算法你了解多少（基于Linux2.6.34.1）</h1>
+			<h2>前提知识</h2>
+			<h3>虚拟运行时间（vruntime）</h3>
+			<p>vruntime其实是一个带权的运行时间，利用权值来控制时间的快慢，而控制时间快慢的方法是使用nice值，nice也叫做时间衰减系数，这是一个具体的数字，取值范围在[-20，19]。优先级低的-&gt;更高的衰减系数，优先级高的-&gt;更低的衰减系数。nice的值可以使用全局变量prio_to_weight转换，nice值越低，权重越大。</p>
+			<pre><code class='language-c' lang='c'>/*
+		 * Nice levels are multiplicative, with a gentle 10% change for every
+		 * nice level changed. I.e. when a CPU-bound task goes from nice 0 to
+		 * nice 1, it will get ~10% less CPU time than another CPU-bound task
+		 * that remained on nice 0.
+		 *
+		 * The &quot;10% effect&quot; is relative and cumulative: from _any_ nice level,
+		 * if you go up 1 level, it&#39;s -10% CPU usage, if you go down 1 level
+		 * it&#39;s +10% CPU usage. (to achieve that we use a multiplier of 1.25.
+		 * If a task goes up by ~10% and another task goes down by ~10% then
+		 * the relative distance between them is ~25%.)
+		 */
+		static const int prio_to_weight[40] = {
+		 /* -20 */     88761,     71755,     56483,     46273,     36291,
+		 /* -15 */     29154,     23254,     18705,     14949,     11916,
+		 /* -10 */      9548,      7620,      6100,      4904,      3906,
+		 /*  -5 */      3121,      2501,      1991,      1586,      1277,
+		 /*   0 */      1024,       820,       655,       526,       423,
+		 /*   5 */       335,       272,       215,       172,       137,
+		 /*  10 */       110,        87,        70,        56,        45,
+		 /*  15 */        36,        29,        23,        18,        15,
+		};
+		</code></pre>
+			<div contenteditable="true" spellcheck="false" class="mathjax-block md-end-block md-math-block md-rawblock" id="mathjax-n292"
+			 cid="n292" mdtype="math_block">
+				<div class="md-rawblock-container md-math-container" tabindex="-1">
+					<div class="MathJax_SVG_Display" style="text-align: center;"><span class="MathJax_SVG" id="MathJax-Element-3-Frame"
+						 tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink"
+							 width="67.849ex" height="6.313ex" viewBox="0 -1610.3 29212.8 2718" role="img" focusable="false" style="vertical-align: -2.573ex; max-width: 100%;"
+							 class="in-text-selection">
+								<defs>
+									<path stroke-width="0" id="E3-MJMAIN-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path>
+									<path stroke-width="0" id="E3-MJMATHI-63" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path>
+									<path stroke-width="0" id="E3-MJMATHI-70" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path>
+									<path stroke-width="0" id="E3-MJMATHI-75" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path>
+									<path stroke-width="0" id="E3-MJMAIN-2217" d="M229 286Q216 420 216 436Q216 454 240 464Q241 464 245 464T251 465Q263 464 273 456T283 436Q283 419 277 356T270 286L328 328Q384 369 389 372T399 375Q412 375 423 365T435 338Q435 325 425 315Q420 312 357 282T289 250L355 219L425 184Q434 175 434 161Q434 146 425 136T401 125Q393 125 383 131T328 171L270 213Q283 79 283 63Q283 53 276 44T250 35Q231 35 224 44T216 63Q216 80 222 143T229 213L171 171Q115 130 110 127Q106 124 100 124Q87 124 76 134T64 161Q64 166 64 169T67 175T72 181T81 188T94 195T113 204T138 215T170 230T210 250L74 315Q65 324 65 338Q65 353 74 363T98 374Q106 374 116 368T171 328L229 286Z"></path>
+									<path stroke-width="0" id="E3-MJMATHI-72" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path>
+									<path stroke-width="0" id="E3-MJMATHI-6E" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path>
+									<path stroke-width="0" id="E3-MJMATHI-71" d="M33 157Q33 258 109 349T280 441Q340 441 372 389Q373 390 377 395T388 406T404 418Q438 442 450 442Q454 442 457 439T460 434Q460 425 391 149Q320 -135 320 -139Q320 -147 365 -148H390Q396 -156 396 -157T393 -175Q389 -188 383 -194H370Q339 -192 262 -192Q234 -192 211 -192T174 -192T157 -193Q143 -193 143 -185Q143 -182 145 -170Q149 -154 152 -151T172 -148Q220 -148 230 -141Q238 -136 258 -53T279 32Q279 33 272 29Q224 -10 172 -10Q117 -10 75 30T33 157ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path>
+									<path stroke-width="0" id="E3-MJMATHI-65" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path>
+								</defs>
+								<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><text
+									 font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none" transform="scale(50.259) matrix(1 0 0 -1 0 0)">分</text>
+									<g transform="translate(804,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+										 transform="scale(50.259) matrix(1 0 0 -1 0 0)">配</text></g>
+									<g transform="translate(1608,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+										 transform="scale(50.259) matrix(1 0 0 -1 0 0)">给</text></g>
+									<g transform="translate(2412,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+										 transform="scale(50.259) matrix(1 0 0 -1 0 0)">进</text></g>
+									<g transform="translate(3216,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+										 transform="scale(50.259) matrix(1 0 0 -1 0 0)">程</text></g>
+									<g transform="translate(4020,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+										 transform="scale(50.259) matrix(1 0 0 -1 0 0)">的</text></g>
+									<g transform="translate(4824,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+										 transform="scale(50.259) matrix(1 0 0 -1 0 0)">时</text></g>
+									<g transform="translate(5629,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+										 transform="scale(50.259) matrix(1 0 0 -1 0 0)">间</text></g>
+									<use xlink:href="#E3-MJMAIN-3D" x="6710" y="0"></use>
+									<g transform="translate(7766,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+										 transform="scale(50.259) matrix(1 0 0 -1 0 0)">总</text></g>
+									<g transform="translate(8570,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+										 transform="scale(50.259) matrix(1 0 0 -1 0 0)">的</text></g>
+									<use xlink:href="#E3-MJMATHI-63" x="9375" y="0"></use>
+									<use xlink:href="#E3-MJMATHI-70" x="9808" y="0"></use>
+									<use xlink:href="#E3-MJMATHI-75" x="10311" y="0"></use>
+									<g transform="translate(10883,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+										 transform="scale(50.259) matrix(1 0 0 -1 0 0)">时</text></g>
+									<g transform="translate(11687,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+										 transform="scale(50.259) matrix(1 0 0 -1 0 0)">间</text></g>
+									<use xlink:href="#E3-MJMAIN-2217" x="12713" y="0"></use>
+									<g transform="translate(13435,0)">
+										<g transform="translate(120,0)">
+											<rect stroke="none" width="15537" height="60" x="0" y="220"></rect>
+											<g transform="translate(5758,689)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+												 transform="scale(50.259) matrix(1 0 0 -1 0 0)">进</text>
+												<g transform="translate(804,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+													 transform="scale(50.259) matrix(1 0 0 -1 0 0)">程</text></g>
+												<g transform="translate(1608,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+													 transform="scale(50.259) matrix(1 0 0 -1 0 0)">的</text></g>
+												<g transform="translate(2412,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+													 transform="scale(50.259) matrix(1 0 0 -1 0 0)">权</text></g>
+												<g transform="translate(3216,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+													 transform="scale(50.259) matrix(1 0 0 -1 0 0)">重</text></g>
+											</g>
+											<g transform="translate(60,-804)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+												 transform="scale(50.259) matrix(1 0 0 -1 0 0)">就</text>
+												<g transform="translate(804,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+													 transform="scale(50.259) matrix(1 0 0 -1 0 0)">绪</text></g>
+												<g transform="translate(1608,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+													 transform="scale(50.259) matrix(1 0 0 -1 0 0)">队</text></g>
+												<g transform="translate(2412,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+													 transform="scale(50.259) matrix(1 0 0 -1 0 0)">列</text></g>
+												<g transform="translate(3216,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+													 transform="scale(50.259) matrix(1 0 0 -1 0 0)">（</text></g>
+												<use xlink:href="#E3-MJMATHI-72" x="4020" y="0"></use>
+												<use xlink:href="#E3-MJMATHI-75" x="4471" y="0"></use>
+												<use xlink:href="#E3-MJMATHI-6E" x="5043" y="0"></use>
+												<use xlink:href="#E3-MJMATHI-71" x="5643" y="0"></use>
+												<use xlink:href="#E3-MJMATHI-75" x="6103" y="0"></use>
+												<use xlink:href="#E3-MJMATHI-65" x="6675" y="0"></use>
+												<use xlink:href="#E3-MJMATHI-75" x="7141" y="0"></use>
+												<use xlink:href="#E3-MJMATHI-65" x="7713" y="0"></use>
+												<g transform="translate(8179,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+													 transform="scale(50.259) matrix(1 0 0 -1 0 0)">）</text></g>
+												<g transform="translate(8983,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+													 transform="scale(50.259) matrix(1 0 0 -1 0 0)">所</text></g>
+												<g transform="translate(9788,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+													 transform="scale(50.259) matrix(1 0 0 -1 0 0)">有</text></g>
+												<g transform="translate(10592,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+													 transform="scale(50.259) matrix(1 0 0 -1 0 0)">进</text></g>
+												<g transform="translate(11396,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+													 transform="scale(50.259) matrix(1 0 0 -1 0 0)">程</text></g>
+												<g transform="translate(12200,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+													 transform="scale(50.259) matrix(1 0 0 -1 0 0)">权</text></g>
+												<g transform="translate(13004,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+													 transform="scale(50.259) matrix(1 0 0 -1 0 0)">重</text></g>
+												<g transform="translate(13808,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+													 transform="scale(50.259) matrix(1 0 0 -1 0 0)">之</text></g>
+												<g transform="translate(14612,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+													 transform="scale(50.259) matrix(1 0 0 -1 0 0)">和</text></g>
+											</g>
+										</g>
+									</g>
+								</g>
+							</svg></span></div>
+					<script type="math/tex; mode=display" id="MathJax-Element-3">分配给进程的时间 = 总的cpu时间 * \dfrac{ 进程的权重}{就绪队列（runqueue）所有进程权重之和}</script>
+				</div>
+			</div>
+			<div contenteditable="true" spellcheck="false" class="mathjax-block md-end-block md-math-block md-rawblock" id="mathjax-n293"
+			 cid="n293" mdtype="math_block">
+				<div class="md-rawblock-container md-math-container" tabindex="-1">
+					<div class="MathJax_SVG_Display" style="text-align: center;"><span class="MathJax_SVG" id="MathJax-Element-4-Frame"
+						 tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink"
+							 width="59.976ex" height="5.963ex" viewBox="0 -1459.5 25823 2567.2" role="img" focusable="false" style="vertical-align: -2.573ex; max-width: 100%;"
+							 class="in-text-selection">
+								<defs>
+									<path stroke-width="0" id="E4-MJMATHI-76" d="M173 380Q173 405 154 405Q130 405 104 376T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Q21 294 29 316T53 368T97 419T160 441Q202 441 225 417T249 361Q249 344 246 335Q246 329 231 291T200 202T182 113Q182 86 187 69Q200 26 250 26Q287 26 319 60T369 139T398 222T409 277Q409 300 401 317T383 343T365 361T357 383Q357 405 376 424T417 443Q436 443 451 425T467 367Q467 340 455 284T418 159T347 40T241 -11Q177 -11 139 22Q102 54 102 117Q102 148 110 181T151 298Q173 362 173 380Z"></path>
+									<path stroke-width="0" id="E4-MJMATHI-72" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path>
+									<path stroke-width="0" id="E4-MJMATHI-75" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path>
+									<path stroke-width="0" id="E4-MJMATHI-6E" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path>
+									<path stroke-width="0" id="E4-MJMATHI-74" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path>
+									<path stroke-width="0" id="E4-MJMATHI-69" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path>
+									<path stroke-width="0" id="E4-MJMATHI-6D" d="M21 287Q22 293 24 303T36 341T56 388T88 425T132 442T175 435T205 417T221 395T229 376L231 369Q231 367 232 367L243 378Q303 442 384 442Q401 442 415 440T441 433T460 423T475 411T485 398T493 385T497 373T500 364T502 357L510 367Q573 442 659 442Q713 442 746 415T780 336Q780 285 742 178T704 50Q705 36 709 31T724 26Q752 26 776 56T815 138Q818 149 821 151T837 153Q857 153 857 145Q857 144 853 130Q845 101 831 73T785 17T716 -10Q669 -10 648 17T627 73Q627 92 663 193T700 345Q700 404 656 404H651Q565 404 506 303L499 291L466 157Q433 26 428 16Q415 -11 385 -11Q372 -11 364 -4T353 8T350 18Q350 29 384 161L420 307Q423 322 423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 181Q151 335 151 342Q154 357 154 369Q154 405 129 405Q107 405 92 377T69 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path>
+									<path stroke-width="0" id="E4-MJMATHI-65" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path>
+									<path stroke-width="0" id="E4-MJMAIN-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path>
+									<path stroke-width="0" id="E4-MJMAIN-2217" d="M229 286Q216 420 216 436Q216 454 240 464Q241 464 245 464T251 465Q263 464 273 456T283 436Q283 419 277 356T270 286L328 328Q384 369 389 372T399 375Q412 375 423 365T435 338Q435 325 425 315Q420 312 357 282T289 250L355 219L425 184Q434 175 434 161Q434 146 425 136T401 125Q393 125 383 131T328 171L270 213Q283 79 283 63Q283 53 276 44T250 35Q231 35 224 44T216 63Q216 80 222 143T229 213L171 171Q115 130 110 127Q106 124 100 124Q87 124 76 134T64 161Q64 166 64 169T67 175T72 181T81 188T94 195T113 204T138 215T170 230T210 250L74 315Q65 324 65 338Q65 353 74 363T98 374Q106 374 116 368T171 328L229 286Z"></path>
+									<path stroke-width="0" id="E4-MJMATHI-4E" d="M234 637Q231 637 226 637Q201 637 196 638T191 649Q191 676 202 682Q204 683 299 683Q376 683 387 683T401 677Q612 181 616 168L670 381Q723 592 723 606Q723 633 659 637Q635 637 635 648Q635 650 637 660Q641 676 643 679T653 683Q656 683 684 682T767 680Q817 680 843 681T873 682Q888 682 888 672Q888 650 880 642Q878 637 858 637Q787 633 769 597L620 7Q618 0 599 0Q585 0 582 2Q579 5 453 305L326 604L261 344Q196 88 196 79Q201 46 268 46H278Q284 41 284 38T282 19Q278 6 272 0H259Q228 2 151 2Q123 2 100 2T63 2T46 1Q31 1 31 10Q31 14 34 26T39 40Q41 46 62 46Q130 49 150 85Q154 91 221 362L289 634Q287 635 234 637Z"></path>
+									<path stroke-width="0" id="E4-MJMATHI-49" d="M43 1Q26 1 26 10Q26 12 29 24Q34 43 39 45Q42 46 54 46H60Q120 46 136 53Q137 53 138 54Q143 56 149 77T198 273Q210 318 216 344Q286 624 286 626Q284 630 284 631Q274 637 213 637H193Q184 643 189 662Q193 677 195 680T209 683H213Q285 681 359 681Q481 681 487 683H497Q504 676 504 672T501 655T494 639Q491 637 471 637Q440 637 407 634Q393 631 388 623Q381 609 337 432Q326 385 315 341Q245 65 245 59Q245 52 255 50T307 46H339Q345 38 345 37T342 19Q338 6 332 0H316Q279 2 179 2Q143 2 113 2T65 2T43 1Z"></path>
+									<path stroke-width="0" id="E4-MJMATHI-43" d="M50 252Q50 367 117 473T286 641T490 704Q580 704 633 653Q642 643 648 636T656 626L657 623Q660 623 684 649Q691 655 699 663T715 679T725 690L740 705H746Q760 705 760 698Q760 694 728 561Q692 422 692 421Q690 416 687 415T669 413H653Q647 419 647 422Q647 423 648 429T650 449T651 481Q651 552 619 605T510 659Q484 659 454 652T382 628T299 572T226 479Q194 422 175 346T156 222Q156 108 232 58Q280 24 350 24Q441 24 512 92T606 240Q610 253 612 255T628 257Q648 257 648 248Q648 243 647 239Q618 132 523 55T319 -22Q206 -22 128 53T50 252Z"></path>
+									<path stroke-width="0" id="E4-MJMATHI-45" d="M492 213Q472 213 472 226Q472 230 477 250T482 285Q482 316 461 323T364 330H312Q311 328 277 192T243 52Q243 48 254 48T334 46Q428 46 458 48T518 61Q567 77 599 117T670 248Q680 270 683 272Q690 274 698 274Q718 274 718 261Q613 7 608 2Q605 0 322 0H133Q31 0 31 11Q31 13 34 25Q38 41 42 43T65 46Q92 46 125 49Q139 52 144 61Q146 66 215 342T285 622Q285 629 281 629Q273 632 228 634H197Q191 640 191 642T193 659Q197 676 203 680H757Q764 676 764 669Q764 664 751 557T737 447Q735 440 717 440H705Q698 445 698 453L701 476Q704 500 704 528Q704 558 697 578T678 609T643 625T596 632T532 634H485Q397 633 392 631Q388 629 386 622Q385 619 355 499T324 377Q347 376 372 376H398Q464 376 489 391T534 472Q538 488 540 490T557 493Q562 493 565 493T570 492T572 491T574 487T577 483L544 351Q511 218 508 216Q505 213 492 213Z"></path>
+									<path stroke-width="0" id="E4-MJMAIN-5F" d="M0 -62V-25H499V-62H0Z"></path>
+									<path stroke-width="0" id="E4-MJMAIN-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path>
+									<path stroke-width="0" id="E4-MJMATHI-4C" d="M228 637Q194 637 192 641Q191 643 191 649Q191 673 202 682Q204 683 217 683Q271 680 344 680Q485 680 506 683H518Q524 677 524 674T522 656Q517 641 513 637H475Q406 636 394 628Q387 624 380 600T313 336Q297 271 279 198T252 88L243 52Q243 48 252 48T311 46H328Q360 46 379 47T428 54T478 72T522 106T564 161Q580 191 594 228T611 270Q616 273 628 273H641Q647 264 647 262T627 203T583 83T557 9Q555 4 553 3T537 0T494 -1Q483 -1 418 -1T294 0H116Q32 0 32 10Q32 17 34 24Q39 43 44 45Q48 46 59 46H65Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Q285 635 228 637Z"></path>
+									<path stroke-width="0" id="E4-MJMATHI-4F" d="M740 435Q740 320 676 213T511 42T304 -22Q207 -22 138 35T51 201Q50 209 50 244Q50 346 98 438T227 601Q351 704 476 704Q514 704 524 703Q621 689 680 617T740 435ZM637 476Q637 565 591 615T476 665Q396 665 322 605Q242 542 200 428T157 216Q157 126 200 73T314 19Q404 19 485 98T608 313Q637 408 637 476Z"></path>
+									<path stroke-width="0" id="E4-MJMATHI-41" d="M208 74Q208 50 254 46Q272 46 272 35Q272 34 270 22Q267 8 264 4T251 0Q249 0 239 0T205 1T141 2Q70 2 50 0H42Q35 7 35 11Q37 38 48 46H62Q132 49 164 96Q170 102 345 401T523 704Q530 716 547 716H555H572Q578 707 578 706L606 383Q634 60 636 57Q641 46 701 46Q726 46 726 36Q726 34 723 22Q720 7 718 4T704 0Q701 0 690 0T651 1T578 2Q484 2 455 0H443Q437 6 437 9T439 27Q443 40 445 43L449 46H469Q523 49 533 63L521 213H283L249 155Q208 86 208 74ZM516 260Q516 271 504 416T490 562L463 519Q447 492 400 412L310 260L413 259Q516 259 516 260Z"></path>
+									<path stroke-width="0" id="E4-MJMATHI-44" d="M287 628Q287 635 230 637Q207 637 200 638T193 647Q193 655 197 667T204 682Q206 683 403 683Q570 682 590 682T630 676Q702 659 752 597T803 431Q803 275 696 151T444 3L430 1L236 0H125H72Q48 0 41 2T33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM703 469Q703 507 692 537T666 584T629 613T590 629T555 636Q553 636 541 636T512 636T479 637H436Q392 637 386 627Q384 623 313 339T242 52Q242 48 253 48T330 47Q335 47 349 47T373 46Q499 46 581 128Q617 164 640 212T683 339T703 469Z"></path>
+									<path stroke-width="0" id="E4-MJMATHI-77" d="M580 385Q580 406 599 424T641 443Q659 443 674 425T690 368Q690 339 671 253Q656 197 644 161T609 80T554 12T482 -11Q438 -11 404 5T355 48Q354 47 352 44Q311 -11 252 -11Q226 -11 202 -5T155 14T118 53T104 116Q104 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Q21 293 29 315T52 366T96 418T161 441Q204 441 227 416T250 358Q250 340 217 250T184 111Q184 65 205 46T258 26Q301 26 334 87L339 96V119Q339 122 339 128T340 136T341 143T342 152T345 165T348 182T354 206T362 238T373 281Q402 395 406 404Q419 431 449 431Q468 431 475 421T483 402Q483 389 454 274T422 142Q420 131 420 107V100Q420 85 423 71T442 42T487 26Q558 26 600 148Q609 171 620 213T632 273Q632 306 619 325T593 357T580 385Z"></path>
+									<path stroke-width="0" id="E4-MJMATHI-67" d="M311 43Q296 30 267 15T206 0Q143 0 105 45T66 160Q66 265 143 353T314 442Q361 442 401 394L404 398Q406 401 409 404T418 412T431 419T447 422Q461 422 470 413T480 394Q480 379 423 152T363 -80Q345 -134 286 -169T151 -205Q10 -205 10 -137Q10 -111 28 -91T74 -71Q89 -71 102 -80T116 -111Q116 -121 114 -130T107 -144T99 -154T92 -162L90 -164H91Q101 -167 151 -167Q189 -167 211 -155Q234 -144 254 -122T282 -75Q288 -56 298 -13Q311 35 311 43ZM384 328L380 339Q377 350 375 354T369 368T359 382T346 393T328 402T306 405Q262 405 221 352Q191 313 171 233T151 117Q151 38 213 38Q269 38 323 108L331 118L384 328Z"></path>
+									<path stroke-width="0" id="E4-MJMATHI-68" d="M137 683Q138 683 209 688T282 694Q294 694 294 685Q294 674 258 534Q220 386 220 383Q220 381 227 388Q288 442 357 442Q411 442 444 415T478 336Q478 285 440 178T402 50Q403 36 407 31T422 26Q450 26 474 56T513 138Q516 149 519 151T535 153Q555 153 555 145Q555 144 551 130Q535 71 500 33Q466 -10 419 -10H414Q367 -10 346 17T325 74Q325 90 361 192T398 345Q398 404 354 404H349Q266 404 205 306L198 293L164 158Q132 28 127 16Q114 -11 83 -11Q69 -11 59 -2T48 16Q48 30 121 320L195 616Q195 629 188 632T149 637H128Q122 643 122 645T124 664Q129 683 137 683Z"></path>
+								</defs>
+								<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)">
+									<use xlink:href="#E4-MJMATHI-76" x="0" y="0"></use>
+									<use xlink:href="#E4-MJMATHI-72" x="485" y="0"></use>
+									<use xlink:href="#E4-MJMATHI-75" x="936" y="0"></use>
+									<use xlink:href="#E4-MJMATHI-6E" x="1508" y="0"></use>
+									<use xlink:href="#E4-MJMATHI-74" x="2108" y="0"></use>
+									<use xlink:href="#E4-MJMATHI-69" x="2469" y="0"></use>
+									<use xlink:href="#E4-MJMATHI-6D" x="2814" y="0"></use>
+									<use xlink:href="#E4-MJMATHI-65" x="3692" y="0"></use>
+									<g transform="translate(4158,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+										 transform="scale(50.259) matrix(1 0 0 -1 0 0)">（</text></g>
+									<g transform="translate(4962,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+										 transform="scale(50.259) matrix(1 0 0 -1 0 0)">虚</text></g>
+									<g transform="translate(5766,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+										 transform="scale(50.259) matrix(1 0 0 -1 0 0)">拟</text></g>
+									<g transform="translate(6570,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+										 transform="scale(50.259) matrix(1 0 0 -1 0 0)">运</text></g>
+									<g transform="translate(7374,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+										 transform="scale(50.259) matrix(1 0 0 -1 0 0)">行</text></g>
+									<g transform="translate(8178,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+										 transform="scale(50.259) matrix(1 0 0 -1 0 0)">时</text></g>
+									<g transform="translate(8982,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+										 transform="scale(50.259) matrix(1 0 0 -1 0 0)">间</text></g>
+									<g transform="translate(9787,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+										 transform="scale(50.259) matrix(1 0 0 -1 0 0)">）</text></g>
+									<use xlink:href="#E4-MJMAIN-3D" x="10868" y="0"></use>
+									<g transform="translate(11924,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+										 transform="scale(50.259) matrix(1 0 0 -1 0 0)">实</text></g>
+									<g transform="translate(12728,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+										 transform="scale(50.259) matrix(1 0 0 -1 0 0)">际</text></g>
+									<g transform="translate(13533,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+										 transform="scale(50.259) matrix(1 0 0 -1 0 0)">运</text></g>
+									<g transform="translate(14337,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+										 transform="scale(50.259) matrix(1 0 0 -1 0 0)">行</text></g>
+									<g transform="translate(15141,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+										 transform="scale(50.259) matrix(1 0 0 -1 0 0)">时</text></g>
+									<g transform="translate(15945,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+										 transform="scale(50.259) matrix(1 0 0 -1 0 0)">间</text></g>
+									<use xlink:href="#E4-MJMAIN-2217" x="16971" y="0"></use>
+									<g transform="translate(17694,0)">
+										<g transform="translate(120,0)">
+											<rect stroke="none" width="7888" height="60" x="0" y="220"></rect>
+											<g transform="translate(225,676)">
+												<use xlink:href="#E4-MJMATHI-4E" x="0" y="0"></use>
+												<use xlink:href="#E4-MJMATHI-49" x="888" y="0"></use>
+												<use xlink:href="#E4-MJMATHI-43" x="1392" y="0"></use>
+												<use xlink:href="#E4-MJMATHI-45" x="2152" y="0"></use>
+												<use xlink:href="#E4-MJMAIN-5F" x="2916" y="0"></use>
+												<use xlink:href="#E4-MJMAIN-30" x="3416" y="0"></use>
+												<use xlink:href="#E4-MJMAIN-5F" x="3916" y="0"></use>
+												<use xlink:href="#E4-MJMATHI-4C" x="4416" y="0"></use>
+												<use xlink:href="#E4-MJMATHI-4F" x="5097" y="0"></use>
+												<use xlink:href="#E4-MJMATHI-41" x="5860" y="0"></use>
+												<use xlink:href="#E4-MJMATHI-44" x="6610" y="0"></use>
+											</g>
+											<g transform="translate(60,-804)">
+												<use xlink:href="#E4-MJMATHI-77" x="0" y="0"></use>
+												<use xlink:href="#E4-MJMATHI-65" x="716" y="0"></use>
+												<use xlink:href="#E4-MJMATHI-69" x="1182" y="0"></use>
+												<use xlink:href="#E4-MJMATHI-67" x="1527" y="0"></use>
+												<use xlink:href="#E4-MJMATHI-68" x="2007" y="0"></use>
+												<use xlink:href="#E4-MJMATHI-74" x="2583" y="0"></use>
+												<g transform="translate(2944,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+													 transform="scale(50.259) matrix(1 0 0 -1 0 0)">（</text></g>
+												<g transform="translate(3748,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+													 transform="scale(50.259) matrix(1 0 0 -1 0 0)">进</text></g>
+												<g transform="translate(4552,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+													 transform="scale(50.259) matrix(1 0 0 -1 0 0)">程</text></g>
+												<g transform="translate(5356,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+													 transform="scale(50.259) matrix(1 0 0 -1 0 0)">权</text></g>
+												<g transform="translate(6160,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+													 transform="scale(50.259) matrix(1 0 0 -1 0 0)">重</text></g>
+												<g transform="translate(6964,0)"><text font-family="STIXGeneral,'Arial Unicode MS',serif" stroke="none"
+													 transform="scale(50.259) matrix(1 0 0 -1 0 0)">）</text></g>
+											</g>
+										</g>
+									</g>
+								</g>
+							</svg></span></div>
+					<script type="math/tex; mode=display" id="MathJax-Element-4">vruntime（虚拟运行时间） = 实际运行时间 * \dfrac{NICE\_0\_LOAD}{weight（进程权重）}</script>
+				</div>
+			</div>
+			<p>(NICE_0_LOAD=1024，默认情况下进程基本都是NICE_0_LOAD)</p>
+			<h3>红黑树（自平衡二叉树）</h3>
+			<p>如图所示这是一个数据结构，在最左端的叶子节点是权值最小的，在Linux里面进程以他们的vruntime为顺序插入红黑树，对处理器需求最多的任务
+				（最低虚拟运行时）存储在树的左侧，处理器需求最少的任务（最高虚拟运行时）存储在树的右侧。
+				<img src="https://img-blog.csdnimg.cn/20200503161917752.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2RyYWdvbmVkXzEyMw==,size_16,color_FFFFFF,t_70#pic_center"
+				 referrerpolicy="no-referrer" alt="在这里插入图片描述"></p>
+			<h3>task_struct进程描述符</h3>
+			<p>进程描述符也就是进程块，里面包含了进程的PID，父进程指针，进程数据指针等等。在Linux里面用fork()函数创建进程的时候会自动创建这个进程的task_struct，从而记录这个进程的信息，提供cpu运行该进程的信息等等。</p>
+			<p>这是源码没有完全列出，看下面源码的第19行，了解sched_class调度器实体结构se作为task_struct进程描述符的成员变量，下文会围绕task_struct开展。</p>
+			<p><mark>task_struct结构源码</mark></p>
+			<pre><code class='language-c' lang='c'>struct task_struct {
+			volatile long state;	/* -1 unrunnable, 0 runnable, &gt;0 stopped */
+			void *stack;
+			atomic_t usage;
+			unsigned int flags;	/* per process flags, defined below */
+			unsigned int ptrace;
+		
+			int lock_depth;		/* BKL lock depth */
+		
+		#ifdef CONFIG_SMP
+		#ifdef __ARCH_WANT_UNLOCKED_CTXSW
+			int oncpu;
+		#endif
+		#endif
+		
+			int prio, static_prio, normal_prio;
+			unsigned int rt_priority;
+			const struct sched_class *sched_class;
+			struct sched_entity se; //sched_class调度器实体结构se作为task_struct进程描述符的成员变量
+			struct sched_rt_entity rt;
+		
+		#ifdef CONFIG_PREEMPT_NOTIFIERS
+			/* list of struct preempt_notifier: */
+			struct hlist_head preempt_notifiers;
+		#endif
+		
+			/*
+			 * fpu_counter contains the number of consecutive context switches
+			 * that the FPU is used. If this is over a threshold, the lazy fpu
+			 * saving becomes unlazy to save the trap. This is an unsigned char
+			 * so that after 256 times the counter wraps and the behavior turns
+			 * lazy again; this to deal with bursty apps that only use FPU for
+			 * a short time
+			 */
+			unsigned char fpu_counter;
+		    //..........
+		    //..........省略很多
+		};
+		</code></pre>
+			<p>&nbsp;</p>
+			<h2>CFS（完全公平调度）</h2>
+			<p>Linux使用vruntime作为进程调度的主要依据，在Linux里面不再采用时间片的概念，但是要确保在公平分配给它的处理器时间内运行。使用分配CPU使用时间的比例。</p>
+			<h2>时间记账</h2>
+			<p>CFS使用调度器实体结构，定义在一个sched_entity结构体里面，能够看到下面源码19行里面有vruntime。这个结构体用来进行跟踪进程运行进行时间记账提供基础。</p>
+			<pre><code class='language-c' lang='c'>/*
+		 * CFS stats for a schedulable entity (task, task-group etc)
+		 *
+		 * Current field usage histogram:
+		 *
+		 *     4 se-&gt;block_start
+		 *     4 se-&gt;run_node
+		 *     4 se-&gt;sleep_start
+		 *     6 se-&gt;load.weight
+		 */
+		struct sched_entity {
+			struct load_weight	load;		/* for load-balancing */
+			struct rb_node		run_node;
+			struct list_head	group_node;
+			unsigned int		on_rq;
+		
+			u64			exec_start;
+			u64			sum_exec_runtime;
+			u64			vruntime;
+			u64			prev_sum_exec_runtime;
+		
+			u64			last_wakeup;
+			u64			avg_overlap;
+		
+			u64			nr_migrations;
+		
+			u64			start_runtime;
+			u64			avg_wakeup;
+		
+		#ifdef CONFIG_SCHEDSTATS
+			u64			wait_start;
+			u64			wait_max;
+			u64			wait_count;
+			u64			wait_sum;
+			u64			iowait_count;
+			u64			iowait_sum;
+		
+			u64			sleep_start;
+			u64			sleep_max;
+			s64			sum_sleep_runtime;
+		
+			u64			block_start;
+			u64			block_max;
+			u64			exec_max;
+			u64			slice_max;
+		
+			u64			nr_migrations_cold;
+			u64			nr_failed_migrations_affine;
+			u64			nr_failed_migrations_running;
+			u64			nr_failed_migrations_hot;
+			u64			nr_forced_migrations;
+		
+			u64			nr_wakeups;
+			u64			nr_wakeups_sync;
+			u64			nr_wakeups_migrate;
+			u64			nr_wakeups_local;
+			u64			nr_wakeups_remote;
+			u64			nr_wakeups_affine;
+			u64			nr_wakeups_affine_attempts;
+			u64			nr_wakeups_passive;
+			u64			nr_wakeups_idle;
+		#endif
+		
+		#ifdef CONFIG_FAIR_GROUP_SCHED
+			struct sched_entity	*parent;
+			/* rq on which this entity is (to be) queued: */
+			struct cfs_rq		*cfs_rq;
+			/* rq &quot;owned&quot; by this entity/group: */
+			struct cfs_rq		*my_q;
+		#endif
+		};
+		</code></pre>
+			<p>updata_curr()函数计算了当前进程的执行时间赋值给delta_exec，传给__updata_curr()函数做时间加权计算，求得vruntime += 权重值，为使用vruntime加入红黑树做基础。</p>
+			<p>&nbsp;</p>
+			<h3>进程的插入红黑树</h3>
+			<p> 有了结构体基础，就可以进行计算每个进程的vruntime了。主要是在<code>kernel/sched_fair.c</code>里面的enqueue_entity()实现，该函数在更新一些运行时间后和一些统计数据后，然后调用__enqueue_entity()进行插入红黑树操作。</p>
+			<p><mark>update_curr()源码：</mark></p>
+			<pre><code class='language-c' lang='c'>static void update_curr(struct cfs_rq *cfs_rq)                    //实现时间记账功能
+		{
+			struct sched_entity *curr = cfs_rq-&gt;curr;
+			u64 now = rq_of(cfs_rq)-&gt;clock;
+			unsigned long delta_exec;
+		
+			if (unlikely(!curr))
+				return;
+		
+			/*
+			 * Get the amount of time the current task was running
+			 * since the last time we changed load (this cannot
+			 * overflow on 32 bits):
+			 */
+			delta_exec = (unsigned long)(now - curr-&gt;exec_start);     //计算了当前进程执行时间
+			if (!delta_exec)
+				return;
+		
+			__update_curr(cfs_rq, curr, delta_exec);            //实现当前进程的运行时间加权计算
+			curr-&gt;exec_start = now;
+		
+			if (entity_is_task(curr)) {
+				struct task_struct *curtask = task_of(curr);
+		
+				trace_sched_stat_runtime(curtask, delta_exec, curr-&gt;vruntime);
+				cpuacct_charge(curtask, delta_exec);
+				account_group_exec_runtime(curtask, delta_exec);
+			}
+		}
+		</code></pre>
+			<p><mark>__update_curr()源码：</mark></p>
+			<pre><code class='language-c' lang='c'>/*
+		 * Update the current task&#39;s runtime statistics. Skip current tasks that
+		 * are not in our scheduling class.
+		 */
+		static inline void
+		__update_curr(struct cfs_rq *cfs_rq, struct sched_entity *curr,
+			      unsigned long delta_exec)
+		{
+			unsigned long delta_exec_weighted;
+		
+			schedstat_set(curr-&gt;exec_max, max((u64)delta_exec, curr-&gt;exec_max));
+		
+			curr-&gt;sum_exec_runtime += delta_exec;
+			schedstat_add(cfs_rq, exec_clock, delta_exec);
+			delta_exec_weighted = calc_delta_fair(delta_exec, curr);
+		
+			curr-&gt;vruntime += delta_exec_weighted;//最终权重值加上vruntime
+			update_min_vruntime(cfs_rq);
+		}
+		</code></pre>
+			<h2>调度器入口</h2>
+			<p>调度入口是函数schedule()，会找到一个最高优先级的调度类，这个调度类要有自己的可运行队列，然后询问后者谁是下一个运行的进程。这个函数会调用pick_next_task()，会以优先级为序，从高到低，一次检查，从最高的优先级的调度类，选择最高优先级进程。</p>
+			<p><mark>先看一下schedule()源码：</mark></p>
+			<pre><code class='language-c' lang='c'>/*
+		 * schedule() is the main scheduler function.
+		 */
+		asmlinkage void __sched schedule(void)
+		{
+			struct task_struct *prev, *next;
+			unsigned long *switch_count;
+			struct rq *rq;                                            //红黑树指针
+			int cpu;
+		
+		need_resched:
+			preempt_disable();
+			cpu = smp_processor_id();
+			rq = cpu_rq(cpu);
+			rcu_sched_qs(cpu);
+			prev = rq-&gt;curr;
+			switch_count = &amp;prev-&gt;nivcsw;
+		
+			release_kernel_lock(prev);
+		need_resched_nonpreemptible:
+		
+			schedule_debug(prev);
+		
+			if (sched_feat(HRTICK))
+				hrtick_clear(rq);
+		
+			raw_spin_lock_irq(&amp;rq-&gt;lock);
+			update_rq_clock(rq);
+			clear_tsk_need_resched(prev);
+		
+			if (prev-&gt;state &amp;&amp; !(preempt_count() &amp; PREEMPT_ACTIVE)) {
+				if (unlikely(signal_pending_state(prev-&gt;state, prev)))
+					prev-&gt;state = TASK_RUNNING;
+				else
+					deactivate_task(rq, prev, 1);
+				switch_count = &amp;prev-&gt;nvcsw;
+			}
+		
+			pre_schedule(rq, prev);
+		
+			if (unlikely(!rq-&gt;nr_running))
+				idle_balance(cpu, rq);
+		
+			put_prev_task(rq, prev);               //调用调度类返回红黑树
+			next = pick_next_task(rq);             //调用pick_next_task()返回红黑树的最左端叶子节点
+		
+			if (likely(prev != next)) {
+				sched_info_switch(prev, next);
+				perf_event_task_sched_out(prev, next);
+		
+				rq-&gt;nr_switches++;
+				rq-&gt;curr = next;
+				++*switch_count;
+		
+				context_switch(rq, prev, next); /* unlocks the rq */
+				/*
+				 * the context switch might have flipped the stack from under
+				 * us, hence refresh the local variables.
+				 */
+				cpu = smp_processor_id();
+				rq = cpu_rq(cpu);
+			} else
+				raw_spin_unlock_irq(&amp;rq-&gt;lock);
+		
+			post_schedule(rq);
+		
+			if (unlikely(reacquire_kernel_lock(current) &lt; 0)) {
+				prev = rq-&gt;curr;
+				switch_count = &amp;prev-&gt;nivcsw;
+				goto need_resched_nonpreemptible;
+			}
+		
+			preempt_enable_no_resched();
+			if (need_resched())
+				goto need_resched;
+		}
+		</code></pre>
+			<p><mark>下面是pick_next_task()源码</mark></p>
+			<pre><code class='language-c' lang='c'>static inline struct task_struct *
+		pick_next_task(struct rq *rq)                               //返回指针
+		{
+			const struct sched_class *class;
+			struct task_struct *p;
+		
+			/*
+			 * Optimization: we know that if all tasks are in
+			 * the fair class we can call that function directly:
+			 */
+			if (likely(rq-&gt;nr_running == rq-&gt;cfs.nr_running)) {
+				p = fair_sched_class.pick_next_task(rq);
+				if (likely(p))
+					return p;
+			}
+		
+			class = sched_class_highest;
+			for ( ; ; ) {
+				p = class-&gt;pick_next_task(rq);
+				if (p)
+					return p;
+				/*
+				 * Will never be NULL as the idle class always
+				 * returns a non-NULL p:
+				 */
+				class = class-&gt;next;
+			}
+		}
+		</code></pre>
+			<h2>进程选择</h2>
+			<p> 有了红黑树接下来就可以进行调用，查找最小的vruntime。调用pick_next_task()返回红黑树最左边的叶子节点的sched_entity。就 CFS 部分而言，调度函数非常简单。 在
+				./kernel/sched.c 中，您会看到通用 <code>schedule()</code> 函数，它会先抢占当前运行任务（除非它通过 <code>yield()</code> 代码先抢占自己）。注意 CFS
+				没有真正的时间切片概念用于抢占，因为抢占时间是可变的。 当前运行任务（现在被抢占的任务）通过对 <code>put_prev_task</code> 调用（通过调度类）返回到红黑树。 当 <code>schedule</code>
+				函数开始确定下一个要调度的任务时，它会调用 <code>pick_next_task</code>函数。此函数也是通用的（在 ./kernel/sched.c 中），但它会通过调度器类调用 CFS 调度器。 CFS 中的
+				<code>pick_next_task</code> 函数可以在 ./kernel/sched_fair.c（称为 <code>pick_next_task_fair()</code>）中找到。
+				此函数只是从红黑树中获取最左端的任务并返回相关 <code>sched_entity</code>。通过此引用，一个简单的 <code>task_of()</code> 调用确定返回的 <code>task_struct</code>
+				引用。</p>
+			<p><mark>pick_next_task_fair()源码：</mark></p>
+			<pre><code class='language-c' lang='c'>static struct task_struct *pick_next_task_fair(struct rq *rq)    //返回指针
+		{
+			struct task_struct *p;
+			struct cfs_rq *cfs_rq = &amp;rq-&gt;cfs;
+			struct sched_entity *se;
+		
+			if (!cfs_rq-&gt;nr_running)
+				return NULL;
+		
+			do {
+				se = pick_next_entity(cfs_rq);          //返回最最小vruntime的节点指针
+				set_next_entity(cfs_rq, se);
+				cfs_rq = group_cfs_rq(se);
+			} while (cfs_rq);
+		
+			p = task_of(se);                 //用task_of()调用确定返回的task_struct引用
+			hrtick_start_fair(rq, p);
+		
+			return p;
+		}
+		</code></pre>
+			<p>&nbsp;</p>
+			<pre><code class='language-c' lang='c'>/*
+		 * All the scheduling class methods:
+		 */
+		static const struct sched_class fair_sched_class = {
+			.next			= &amp;idle_sched_class,
+			.enqueue_task		= enqueue_task_fair,
+			.dequeue_task		= dequeue_task_fair,
+			.yield_task		= yield_task_fair,
+		
+			.check_preempt_curr	= check_preempt_wakeup,
+		
+			.pick_next_task		= pick_next_task_fair,  //CFS 中的 pick_next_task 函数可以在 		                                            //pick_next_task_fair()中找到
+		
+		#ifdef CONFIG_SMP
+			.select_task_rq		= select_task_rq_fair,
+		
+			.rq_online		= rq_online_fair,
+			.rq_offline		= rq_offline_fair,
+		
+			.task_waking		= task_waking_fair,
+		#endif
+		
+			.set_curr_task          = set_curr_task_fair,
+			.task_tick		= task_tick_fair,
+			.task_fork		= task_fork_fair,
+		
+			.prio_changed		= prio_changed_fair,
+			.switched_to		= switched_to_fair,
+		
+			.get_rr_interval	= get_rr_interval_fair,
+		
+		#ifdef CONFIG_FAIR_GROUP_SCHED
+			.moved_group		= moved_group_fair,
+		#endif
+		};
+		</code></pre>
+			<p><mark>enquene_entity()源码：</mark></p>
+			<pre><code class='language-c' lang='c'>#define ENQUEUE_WAKEUP	1
+		#define ENQUEUE_MIGRATE 2
+		
+		enqueue_entity(struct cfs_rq *cfs_rq, struct sched_entity *se, int flags)
+		{
+			/*
+			 * Update the normalized vruntime before updating min_vruntime
+			 * through callig update_curr().
+			 */
+			if (!(flags &amp; ENQUEUE_WAKEUP) || (flags &amp; ENQUEUE_MIGRATE))
+				se-&gt;vruntime += cfs_rq-&gt;min_vruntime;
+		
+			/*
+			 * Update run-time statistics of the &#39;current&#39;.
+			 */
+			update_curr(cfs_rq);
+			account_entity_enqueue(cfs_rq, se);
+		
+			if (flags &amp; ENQUEUE_WAKEUP) {
+				place_entity(cfs_rq, se, 0);
+				enqueue_sleeper(cfs_rq, se);
+			}
+		
+			update_stats_enqueue(cfs_rq, se);
+			check_spread(cfs_rq, se);
+			if (se != cfs_rq-&gt;curr)
+				__enqueue_entity(cfs_rq, se);//调用__enquenue_entity()
+		}
+		</code></pre>
+			<p><mark>__enqueue_entity()源码：</mark></p>
+			<pre><code class='language-c' lang='c'>/*
+		 * Enqueue an entity into the rb-tree:
+		 */
+		static void __enqueue_entity(struct cfs_rq *cfs_rq, struct sched_entity *se)
+		{
+			struct rb_node **link = &amp;cfs_rq-&gt;tasks_timeline.rb_node;
+			struct rb_node *parent = NULL;
+			struct sched_entity *entry;
+			s64 key = entity_key(cfs_rq, se);
+			int leftmost = 1;
+		
+			/*
+			 * Find the right place in the rbtree:
+			 */
+			while (*link) {
+				parent = *link;
+				entry = rb_entry(parent, struct sched_entity, run_node);
+				/*
+				 * We dont care about collisions. Nodes with
+				 * the same key stay together.
+				 */
+				if (key &lt; entity_key(cfs_rq, entry)) {
+					link = &amp;parent-&gt;rb_left;
+				} else {
+					link = &amp;parent-&gt;rb_right;
+					leftmost = 0;
+				}
+			}
+		
+			/*
+			 * Maintain a cache of leftmost tree entries (it is frequently
+			 * used):
+			 */
+			if (leftmost)
+				cfs_rq-&gt;rb_leftmost = &amp;se-&gt;run_node;
+		
+			rb_link_node(&amp;se-&gt;run_node, parent, link);
+			rb_insert_color(&amp;se-&gt;run_node, &amp;cfs_rq-&gt;tasks_timeline);
+		}
+		</code></pre>
+			<p>&nbsp;</p>
+			<h2>睡眠和唤醒</h2>
+			<p>1.等待队列</p>
+			<p>被阻塞进程的进程处于特殊的不可执行的状态，进程标记自己为休眠状态，从红黑树里面移除，唤醒，进程设置自己为可执行状态，再从等待队列转移到可执行的红黑树里面。</p>
+			<p>调用宏DEEINE_WAIT()创建一个等待队列的项</p>
+			<p>调用add_wait_queue()把自己加入到队列中</p>
+			<p>调用prepare_to_wait()方法将进程的TASK_INTERRUPTIBLE或TASK_UNINTERRUPTIBLE</p>
+			<p>如果TASK_INTERRUPTIBLE，则信号唤醒，伪唤醒，检查并处理信号</p>
+			<p>当进程被唤醒，会再次检查是否为真，是，退出循环，否，调用schedule()</p>
+			<p>当条件满足的时候将自己设置为TASK_RUNNING并调用finish_wait()移除等待队列</p>
+			<p>2.唤醒</p>
+			<p>唤醒通过操作函数weak_up()进行，他会唤醒指定的等待队列的所有进程，它调用try_to_wake_up()，该函数负责把进程设置为TASK_RUNNING，调用enqueue_task()放入红黑树里面。</p>
+
+		</div>
+		<script>
+			var bod = document.getElementById('mb');
+			var ht = document.body
+			bod.onmouseover = function(){
+				this.className = 'markdown-body markdown-body1';
+				ht.bgColor = '#e3edcd'
+			}
+			bod.onmouseout = function(){
+				this.className = 'markdown-body';
+				ht.bgColor = '#FFFFFF'
+			}	
+		</script>
+	</body>
+
+</html>

@@ -18,7 +18,7 @@
             </div>
         </div>
     </div>
-    <div class="markdown-body">
+    <div class="markdown-body" id='mb'>
        <h1>VS code 保存自动刷新chrome浏览器</h1>
        <p>&nbsp;</p>
        <h2>1.准备chrome插件（LiveReload）</h2>
@@ -39,6 +39,18 @@
        <h4>5.返回之后左击浏览器插件图标当插件图标中心的小圆点变为实心的时候证明连接成功，如果有错误提示，应该是你VS code里面的LiveReload插件没有enable，你需要快捷键Ctrl+shift+P，然后搜索点击LiveReload：enable/disenable sever再返回浏览器点击插件图标就OK了</h4>
        <p><img src="https://img-blog.csdnimg.cn/20200501102818477.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2RyYWdvbmVkXzEyMw==,size_16,color_FFFFFF,t_70#pic_center" referrerpolicy="no-referrer" alt="在这里插入图片描述"></p>
     </div>
+	<script>
+		var bod = document.getElementById('mb');
+		var ht = document.body
+		bod.onmouseover = function(){
+			this.className = 'markdown-body markdown-body1';
+			ht.bgColor = '#e3edcd'
+		}
+		bod.onmouseout = function(){
+			this.className = 'markdown-body';
+			ht.bgColor = '#FFFFFF'
+		}	
+	</script>
 </body>
 
 </html>

@@ -15,7 +15,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="markdown-body">
+		<div class="markdown-body" id='mb'>
 			<h1>java连接Access数据库（详细）,你get到了吗？</h1>
 			<h2>建立数据库</h2>
 			<p>1.首先下载office2016专业版，里面含有Access，具体下载可以百度。
@@ -116,6 +116,17 @@ public class TestConSQL {
 				连接串：jdbc:mysql://localhost:3306/sample_db?user=root&amp;password=your_password</p>
 
 		</div>
-
+		<script>
+			var bod = document.getElementById('mb');
+			var ht = document.body
+			bod.onmouseover = function(){
+				this.className = 'markdown-body markdown-body1';
+				ht.bgColor = '#e3edcd'
+			}
+			bod.onmouseout = function(){
+				this.className = 'markdown-body';
+				ht.bgColor = '#FFFFFF'
+			}	
+		</script>
 	</body>
 </html>

@@ -16,6 +16,10 @@
   border-radius: 15px;
 }
 
+.markdown-body1 {
+	background-color: #FFFFFF;
+}
+
 .markdown-body .pl-c {
   color: #6a737d;
 }
@@ -610,7 +614,7 @@
   font-size: 85%;
   background-color: rgba(27,31,35,0.05);
   border-radius: 3px;
-  background-color: #3a3f42;
+  background-color: #37b1fb;
   color: #fff;
 }
 
@@ -643,7 +647,7 @@
   overflow: auto;
   font-size: 85%;
   line-height: 1.45;
-  background-color: #31363f;
+  background-color: #f7f7f7;
   border-radius: 3px;
 }
 
