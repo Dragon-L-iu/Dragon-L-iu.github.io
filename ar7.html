@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="css/mark-style/atomonedark.css" type="text/css" charset="UTF-8" />
+		<link rel="stylesheet" href="css/mark-style/prism.css" type="text/css" charset="UTF-8" />
+		<link rel="stylesheet" href="css/mark-style/style.css" type="text/css" charset="UTF-8" />
+		<script src="js/ar_change.js" type="text/javascript" charset="UTF-8"></script>
+		<title>文章</title>
+	</head>
+
+	<body>
+		<div class="head">
+			<div class="background_cont">
+				<div class="background_cont_title">
+					<div class="background_cont_title_cont">使用keil连接proteus（单片机C51）</div>
+				</div>
+			</div>
+		</div>
+		<div class="markdown-body" id="mb">
+			<h1>使用keil连接proteus（单片机C51）</h1>
+			<p>1.保存为.c文件</p>
+			<p><img src="https://img-blog.csdnimg.cn/2020050421190825.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2RyYWdvbmVkXzEyMw==,size_16,color_FFFFFF,t_70#pic_center"
+				 referrerpolicy="no-referrer" alt="在这里插入图片描述"></p>
+			<p>2.生成hex文件，为了仿真模拟时加载程序</p>
+			<p><img src="https://img-blog.csdnimg.cn/20200504211927400.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2RyYWdvbmVkXzEyMw==,size_16,color_FFFFFF,t_70#pic_center"
+				 referrerpolicy="no-referrer" alt="在这里插入图片描述"></p>
+			<p>3.用来连接仿真软件</p>
+			<p><img src="https://img-blog.csdnimg.cn/20200504211944653.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2RyYWdvbmVkXzEyMw==,size_16,color_FFFFFF,t_70#pic_center"
+				 referrerpolicy="no-referrer" alt="在这里插入图片描述"></p>
+			<p>4.找到这个选项为了连接</p>
+			<p><img src="https://img-blog.csdnimg.cn/20200504211957736.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2RyYWdvbmVkXzEyMw==,size_16,color_FFFFFF,t_70#pic_center"
+				 referrerpolicy="no-referrer" alt="在这里插入图片描述"></p>
+			<p>5.编译整个项目</p>
+			<p><img src="https://img-blog.csdnimg.cn/20200504212012911.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2RyYWdvbmVkXzEyMw==,size_16,color_FFFFFF,t_70#pic_center"
+				 referrerpolicy="no-referrer" alt="在这里插入图片描述"></p>
+			<p>6.可以看到项目下有.hex的文件
+				<img src="https://img-blog.csdnimg.cn/20200504212027594.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2RyYWdvbmVkXzEyMw==,size_16,color_FFFFFF,t_70#pic_center"
+				 referrerpolicy="no-referrer" alt="在这里插入图片描述"></p>
+			<p>7.双击处理器找到文件夹，加载.hex</p>
+			<p><img src="https://img-blog.csdnimg.cn/20200504212044718.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2RyYWdvbmVkXzEyMw==,size_16,color_FFFFFF,t_70#pic_center"
+				 referrerpolicy="no-referrer" alt="在这里插入图片描述"></p>
+			<p>8.开始执行和停止</p>
+			<p><img src="https://img-blog.csdnimg.cn/20200504212056996.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2RyYWdvbmVkXzEyMw==,size_16,color_FFFFFF,t_70#pic_center"
+				 referrerpolicy="no-referrer" alt="在这里插入图片描述"></p>
+			<p><mark>我的电脑没有办法在keil里面debug（调试），一般我平时不debug</mark></p>
+			<p><mark>大致的流程就是这样，从创建C语言文件到链接proteus就是这样</mark></p>
+
+		</div>
+		<script>
+			var bod = document.getElementById('mb');
+			var ht = document.body
+			bod.onmouseover = function() {
+				this.className = 'markdown-body markdown-body1';
+				ht.bgColor = '#e3edcd'
+			}
+			bod.onmouseout = function() {
+				this.className = 'markdown-body';
+				ht.bgColor = '#FFFFFF'
+			}
+		</script>
+	</body>
+
+</html>
