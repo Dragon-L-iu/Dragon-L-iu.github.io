@@ -262,11 +262,11 @@
 	</body>
 <script>
 	$(".list1 >li").mouseenter(function () {
-		 $(this).children(".list2").slideDown(1000);
-		 $(this).siblings().children(".list2").slideUp(1000);
+		 $(this).children(".list2").stop().slideDown(1000);
+		 $(this).siblings().children(".list2").stop().slideUp(1000);
 	});
 	$(".list1").mouseleave(function () {
-		$(this).children().children().slideUp(1000);
+		$(this).children().children().stop().slideUp(1000);
 	});
 
 	alert("所有百度网盘提取码为：6666");
