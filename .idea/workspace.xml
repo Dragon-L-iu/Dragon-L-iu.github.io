@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="4763fdbe-377a-43af-bc9d-815f4bfd3e95" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="1bClbVolUDtd9drkeBxW8nRag7E" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+  </component>
+  <component name="RunManager">
+    <configuration name="ar3.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/mypage/ar3.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.ar3.html" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4763fdbe-377a-43af-bc9d-815f4bfd3e95" name="Default Changelist" comment="" />
+      <created>1588144028784</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1588144028784</updated>
+      <workItem from="1588144034009" duration="471000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="137" y="23" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1588144338402">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="137" y="23" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.738@0.0.1366.738" timestamp="1588144338402" />
+    <state width="1286" height="166" key="GridCell.Tab.0.bottom" timestamp="1588144519814">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state width="1286" height="166" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1588144519814" />
+    <state width="1286" height="166" key="GridCell.Tab.0.center" timestamp="1588144519814">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state width="1286" height="166" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1588144519814" />
+    <state width="1286" height="166" key="GridCell.Tab.0.left" timestamp="1588144519814">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state width="1286" height="166" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1588144519814" />
+    <state width="1286" height="166" key="GridCell.Tab.0.right" timestamp="1588144519814">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state width="1286" height="166" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1588144519814" />
+    <state width="1286" height="166" key="GridCell.Tab.1.bottom" timestamp="1588144519814">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state width="1286" height="166" key="GridCell.Tab.1.bottom/0.0.1366.738@0.0.1366.738" timestamp="1588144519814" />
+    <state width="1286" height="166" key="GridCell.Tab.1.center" timestamp="1588144519814">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state width="1286" height="166" key="GridCell.Tab.1.center/0.0.1366.738@0.0.1366.738" timestamp="1588144519814" />
+    <state width="1286" height="166" key="GridCell.Tab.1.left" timestamp="1588144519814">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state width="1286" height="166" key="GridCell.Tab.1.left/0.0.1366.738@0.0.1366.738" timestamp="1588144519814" />
+    <state width="1286" height="166" key="GridCell.Tab.1.right" timestamp="1588144519814">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state width="1286" height="166" key="GridCell.Tab.1.right/0.0.1366.738@0.0.1366.738" timestamp="1588144519814" />
+    <state width="1286" height="166" key="GridCell.Tab.2.bottom" timestamp="1588144496186">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state width="1286" height="166" key="GridCell.Tab.2.bottom/0.0.1366.738@0.0.1366.738" timestamp="1588144496186" />
+    <state width="1286" height="166" key="GridCell.Tab.2.center" timestamp="1588144496186">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state width="1286" height="166" key="GridCell.Tab.2.center/0.0.1366.738@0.0.1366.738" timestamp="1588144496186" />
+    <state width="1286" height="166" key="GridCell.Tab.2.left" timestamp="1588144496186">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state width="1286" height="166" key="GridCell.Tab.2.left/0.0.1366.738@0.0.1366.738" timestamp="1588144496186" />
+    <state width="1286" height="166" key="GridCell.Tab.2.right" timestamp="1588144496186">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state width="1286" height="166" key="GridCell.Tab.2.right/0.0.1366.738@0.0.1366.738" timestamp="1588144496186" />
+    <state x="117" y="26" key="SettingsEditor" timestamp="1588144237646">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="117" y="26" key="SettingsEditor/0.0.1366.738@0.0.1366.738" timestamp="1588144237646" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/mypage$ar3_html.dat" NAME="ar3.html Coverage Results" MODIFIED="1588144485668" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="WipCoverageRunner" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>

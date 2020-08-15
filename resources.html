@@ -3,10 +3,273 @@
 	<head>
 		<meta charset="utf-8">
 		<title>资源</title>
+		<style>
+			*{
+				margin: 0;
+				top: 0;
+				text-decoration: none;
+				color: #666;
+				user-select: none;
+			}
+			html{
+				width: inherit;
+				height: 600px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			body{
+				background-color: #d3fee1;
+			}
+			.content{
+				width: 1260px;
+				height: 600px;
+				display: flex;
+				justify-content: space-between;
+			}
+			.neum{
+				background: #d3fee1;
+				box-shadow:  4px 4px 9px #b3d8bf,
+				-4px -4px 9px #f3ffff;
+			}
+			.neum_line {
+				background: linear-gradient(145deg, #bee5cb, #e2fff1);
+				box-shadow:  4px 4px 9px #b3d8bf,
+				-4px -4px 9px #f3ffff;
+			}
+			.neum_in{
+				background: #d3fee1;
+				box-shadow: inset 4px 4px 9px #b3d8bf,
+				inset -4px -4px 9px #f3ffff;
+			}
+			.s_con{
+				width: 400px;
+				height: 700px;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+			}
+			.sort{
+				margin-top: 20px;
+				width: 200px;
+				height: 60px;
+				border-radius: 8px;
+				text-align: center;
+				line-height: 60px;
+				font-size: 24px;
+				font-weight: 600;
+			}
+			.ccontent{
+				margin-top: 20px;
+				width: inherit;
+				height: 600px;
+				border-radius: 20px;
+			}
+			.list1{
+				padding: 12px;
+			}
+
+			.list1 >li{
+				list-style: none;
+				width: inherit;
+				/*height: 40px;*/
+				text-align: left;
+				margin-top: 10px;
+				text-align: center;
+				align-content: center;
+				line-height: 40px;
+				font-size: 18px;
+				font-weight: 550;
+				color: #444444;
+				border-radius: 10px;
+
+				background: #d3fee1;
+				box-shadow:  4px 4px 9px #b3d8bf,
+				-4px -4px 9px #f3ffff;
+			}
+
+			.list2{
+				display: none;
+				padding: 10px;
+				border-top:2px solid #b3d8bf;
+			}
+
+			.list2 >li{
+				margin-top: 10px;
+				list-style: none;
+				font-size: 16px;
+				font-weight: 400;
+				color: #666;
+			}
+			.list2 >li:hover{
+				color: black;
+				background: #d3fee1;
+				border-radius: 10px;
+				box-shadow: inset 4px 4px 9px #b3d8bf,
+				inset -4px -4px 9px #f3ffff;
+			}
+		</style>
+		<script src="js/jquery-3.5.1.js"></script>
 	</head>
 	<body>
-		<div class="">
-			
+	<div class="content">
+		<div class="s_con">
+			<div class="neum_line sort">学习</div>
+			<div class="ccontent neum">
+				<ul class="list1">
+					<li>网站
+						<ul class="list2">
+							<li><a target="_blank" href="https://leetcode-cn.com/problemset/all/">力扣 (LeetCode)</a></li>
+							<li><a target="_blank" href="https://www.hackerrank.com/dashboard">Dashboard | HackerRank</a></li>
+							<li><a target="_blank" href="https://www.crunchbase.com/organization/codeeval">CodeEval</a></li>
+							<li><a target="_blank" href="https://www.cnmooc.org/portal/frontCourseIndex/course.mooc?k=&n=course&f=0&t=&m=&e=all&l=all&c=all&p=1&s=-1">好大学在线</a></li>
+							<li><a target="_blank" href="https://zh.khanacademy.org/">可汗学院</a></li>
+							<li><a target="_blank" href="https://www.runoob.com/">菜鸟教程</a></li>
+							<li><a target="_blank" href="http://www.w3school.com.cn/index.html">w3school 在线教程</a></li>
+							<li><a target="_blank" href="http://www.166158.com/">天天学习网</a></li>
+							<li><a target="_blank" href="http://acm.zju.edu.cn/onlinejudge/">ZOJ :: Home</a></li>
+							<li><a target="_blank" href="https://www.52pojie.cn/">吾爱破解 安卓破解|病毒分析|破解软件|</a></li>
+							<li><a target="_blank" href="http://www.zuidaima.com/">最代码源代码分享网站</a></li>
+							<li><a target="_blank" href="https://www.zhihu.com/">知乎</a></li>
+							<li><a target="_blank" href="https://www.csdn.net/">CSDN-专业IT技术社区</a></li>
+							<li><a target="_blank" href="https://unbug.github.io/codelf/">CODELF</a></li>
+							<li><a target="_blank" href="https://www.yiihuu.com/">翼狐网 </a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
 		</div>
+		<div class="s_con">
+			<div class="neum_line sort">软件</div>
+			<div class="ccontent neum">
+				<ul class="list1">
+					<li>编程
+						<ul class="list2">
+							<li><a target="_blank" href="https://www.jetbrains.com/idea/download/#section=windows">IDEA</a></li>
+							<li><a target="_blank" href="https://www.jetbrains.com/pycharm/download/#section=windows">Pycharm</a></li>
+							<li><a target="_blank" href="https://www.jetbrains.com/webstorm/download/#section=windows">Webstorm</a></li>
+							<li><a target="_blank" href="https://code.visualstudio.com/Download">VS code</a></li>
+							<li><a target="_blank" href="https://www.dcloud.io/hbuilderx.html">XHublider</a></li>
+							<li><a target="_blank" href="https://pan.baidu.com/s/12BQgDA2kwoSxtiquF7qKRA">Visual Studio2013</a></li>
+							<li><a target="_blank" href="https://developer.android.google.cn/studio/">Android Studio</a></li>
+							<li><a target="_blank" href="https://pan.baidu.com/s/12BQgDA2kwoSxtiquF7qKRA">Dev-Cpp</a></li>
+							<li><a target="_blank" href="https://pan.baidu.com/s/12BQgDA2kwoSxtiquF7qKRA">Navicate for mysql</a></li>
+							<li><a target="_blank" href="https://pan.baidu.com/s/12BQgDA2kwoSxtiquF7qKRA">Ethereal</a></li>
+							<li><a target="_blank" href="https://pan.baidu.com/s/12BQgDA2kwoSxtiquF7qKRA">ISIS 7</a></li>
+							<li><a target="_blank" href="https://pan.baidu.com/s/12BQgDA2kwoSxtiquF7qKRA">Keil</a></li>
+							<li><a target="_blank" href="https://pan.baidu.com/s/12BQgDA2kwoSxtiquF7qKRA">STC_ISP</a></li>
+							<li><a target="_blank" href="https://pan.baidu.com/s/12BQgDA2kwoSxtiquF7qKRA">VMware</a></li>
+							<li><a target="_blank" href="https://pan.baidu.com/s/12BQgDA2kwoSxtiquF7qKRA">SQLyog</a></li>
+							<li><a target="_blank" href="https://pan.baidu.com/s/12BQgDA2kwoSxtiquF7qKRA">Mysql</a></li>
+							<li><a target="_blank" href="https://www.netsarang.com/zh/xftp-download/">Xftp6</a></li>
+							<li><a target="_blank" href="https://www.netsarang.com/zh/xshell/">Xshell6</a></li>
+							<li><a target="_blank" href="https://zealdocs.org/download.html">Zeal</a></li>
+						</ul>
+					</li>
+					<li>Adobe
+						<ul class="list2">
+							<li><a target="_blank" href="https://pan.baidu.com/s/13Eo6CFXk4Gfa_mYgMG3WFA">Photoshop2020</a></li>
+							<li><a target="_blank" href="https://pan.baidu.com/s/1dhp6BarkUmXho_szcQvZeg">Illustrator2018</a></li>
+							<li><a target="_blank" href="https://pan.baidu.com/s/1mQvvwbi36k4Sue1w5oScUQ">Premiere2019</a></li>
+							<li><a target="_blank" href="https://pan.baidu.com/s/1dhp6BarkUmXho_szcQvZeg">After Effects2018</a></li>
+							<li><a target="_blank" href="https://pan.baidu.com/s/1dhp6BarkUmXho_szcQvZeg">Adobe XD</a></li>
+							<li><a target="_blank" href="https://pan.baidu.com/s/1dhp6BarkUmXho_szcQvZeg">Audition2018</a></li>
+						</ul>
+					</li>
+					<li>提升效率
+						<ul class="list2">
+							<li><a target="_blank" href="https://pan.baidu.com/s/1Yg47jMeCa9rXsVXbQ8qqbA">office2016</a></li>
+							<li><a target="_blank" href="https://pan.baidu.com/s/1qICRuzN5Q5TH7-ZHRxPx2w">office2016激活工具</a></li>
+							<li><a target="_blank" href="https://www.typora.io/">Typora</a></li>
+							<li><a target="_blank" href="https://www.xmind.cn/download/">XMind</a></li>
+							<li><a target="_blank" href="https://pan.baidu.com/s/1Yg47jMeCa9rXsVXbQ8qqbA">OneNote</a></li>
+							<li><a target="_blank" href="https://www.snipaste.com/download.html">Snipaste</a></li>
+							<li><a target="_blank" href="">Screen ToGif</a></li>
+							<li><a target="_blank" href="https://axure.cachefly.net/AxureRP-Setup.exe">Axure</a></li>
+							<li><a target="_blank" href="https://www.electronjs.org/apps/tunlookup">Tunlookup</a></li>
+							<li><a target="_blank" href="">Everything</a></li>
+						</ul>
+					</li>
+					<li>电脑软件
+						<ul class="list2">
+							<li><a target="_blank" href="https://www.huorong.cn/">火绒</a></li>
+							<li><a target="_blank" href="https://www.firefox.com.cn/">Firefox</a></li>
+							<li><a target="_blank" href="http://www.centbrowser.cn/">Cent Browser</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="s_con">
+			<div class="neum_line sort">设计</div>
+			<div class="ccontent neum">
+				<ul class="list1">
+					<li>素材网站
+						<ul class="list2">
+							<li><a target="_blank" href="http://www.51yuansu.com/">觅元素</a></li>
+							<li><a target="_blank" href="https://www.pexels.com/">Free stock photos · Pexels</a></li>
+							<li><a target="_blank" href="https://unsplash.com/">Free Images & Pictures | Unsplash</a></li>
+							<li><a target="_blank" href="https://www.videezy.com/">Free Stock Footage Videos</a></li>
+							<li><a target="_blank" href="https://pixabay.com/zh/editors_choice/">Pixabay</a></li>
+							<li><a target="_blank" href="http://76pic.cn/">尚图网-76pic.cn-尚图网</a></li>
+							<li><a target="_blank" href="https://www.gfxaa.com/category/ppt">顶尖PPT</a></li>
+							<li><a target="_blank" href="https://www.ssyer.com/home">沙沙野|免费背景图片素材</a></li>
+							<li><a target="_blank" href="https://alpha.wallhaven.cc/">真棒壁纸 - wallhaven</a></li>
+							<li><a target="_blank" href="https://huaban.com/">花瓣网_陪你做生活的设计师</a></li>
+							<li><a target="_blank" href="https://www.egouz.com/asia/china/sucai/">中国素材网站|中国素材网址导航- eGouz上网导航</a></li>
+							<li><a target="_blank" href="http://www.1ppt.com/">PPT模板_PPT模板下载_幻灯片模板_PPT模版免费下载 -【第一PPT】</a></li>
+							<li><a target="_blank" href="https://smallpdf.com/">Smallpdf.com</a></li>
+							<li><a target="_blank" href="https://www.bangongziyuan.com/">办公资源 - 专注幻灯片演示文稿素材下载 - 设计及教学素材分享</a></li>
+							<li><a target="_blank" href="http://www.cssmoban.com/">模板之家</a></li>
+							<li><a target="_blank" href="https://visualhunt.com/">Visual Hunt</a></li>
+							<li><a target="_blank" href="http://streetwill.co/">streetwill.co</a></li>
+							<li><a target="_blank" href="http://designmodo.github.io/Flat-UI/#fakelink">Flat UI - Free Bootstrap Framework and Theme </a></li>
+						</ul>
+					</li>
+					<li>灵感网站
+						<ul class="list2">
+							<li><a target="_blank" href="http://notter-vigne.ch/">Notter + Vigne</a></li>
+							<li><a target="_blank" href="http://bm.straightline.jp/">straightline bookmark</a></li>
+							<li><a target="_blank" href="https://hoverstat.es/">Hover States</a></li>
+							<li><a target="_blank" href="https://www.awwwards.com/">Awwwards</a></li>
+							<li><a target="_blank" href="https://create.adobe.com/">Adobe Create</a></li>
+							<li><a target="_blank" href="https://www.seeseed.com/">Seeseed </a></li>
+							<li><a target="_blank" href="https://colorhunt.co/">寻颜色</a></li>
+						</ul>
+					</li>
+					<li>图标
+						<ul class="list2">
+							<li><a target="_blank" href="https://www.iconfinder.com/">iconfinfer</a></li>
+							<li><a target="_blank" href="https://www.flaticon.com/">Free vector icons </a></li>
+							<li><a target="_blank" href="https://www.iconfont.cn/">Iconfont-阿里巴巴矢量图标库</a></li>
+						</ul>
+					</li>
+					<li>辅助设计
+						<ul class="list2">
+							<li><a target="_blank" href="http://weavesilk.com/">Silk – Interactive</a></li>
+							<li><a target="_blank" href="http://logo.xunjietupian.com/#/">免费logo在线制作</a></li>
+							<li><a target="_blank" href="https://instantlogodesign.com/">Instant Logo Design</a></li>
+							<li><a target="_blank" href="https://www.fotor.com.cn/">Fotor在线设计工具</a></li>
+							<li><a target="_blank" href="https://818ps.com/?route_id=15687813247822&route=1,&after_route=1">图怪兽作图神器</a></li>
+							<li><a target="_blank" href="https://www.51sjsj.com/">设计师之家</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
 	</body>
+<script>
+	$(".list1 >li").mouseenter(function () {
+		 $(this).children(".list2").slideDown(1000);
+		 $(this).siblings().children(".list2").slideUp(1000);
+	});
+	$(".list1").mouseleave(function () {
+		$(this).children().children().slideUp(1000);
+	});
+
+	alert("所有百度网盘提取码为：6666");
+
+</script>
 </html>
