@@ -219,6 +219,13 @@
 					</li>
 				</ul>
 				<ul class="list1">
+					<li>PPT模板
+						<ul class="list2" id="four">
+							<li>300套商务PPT模板</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="list1">
 					<li>网盘提取码：6666</li>
 				</ul>
 			</div>
@@ -347,6 +354,16 @@
 					<li><a target="_blank" href="https://www.51sjsj.com/">设计师之家</a></li>
 				</ul>
 			</div>
+			<div class="right_con">
+				<ul class="r_list">
+					<li><a target="_blank" href="https://pan.baidu.com/s/1vt-jt1_CS8stut4F9hHwtQ">经济电力地产类PPT模板</a></li>
+					<li><a target="_blank" href="https://pan.baidu.com/s/10UXT232ffG8f0q20jU95kg">科技风光类PPT模板</a></li>
+					<li><a target="_blank" href="https://pan.baidu.com/s/1oYjW3ZlwVNWQKazbW4hJwQ">汇报演讲类PPT模板</a></li>
+					<li><a target="_blank" href="https://pan.baidu.com/s/13QSQ_LriWrqSIJG198UMJw">年会年终计划总结类PPT模板</a></li>
+					<li><a target="_blank" href="https://pan.baidu.com/s/1P1ASh2owiOMj-H_KEcOJzA">城市高楼风PPT模板</a></li>
+					<li><a target="_blank" href="https://pan.baidu.com/s/1JQ6BRWtQAmZzr3O9Kbh2hw">卡通风PPT模板</a></li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </body>
@@ -395,6 +412,13 @@
 		let l = $(this).index();
 		let s = 800*l;
 		$(".right_con").eq(2).stop().fadeIn(1000);
+		$('.demo-y').mCustomScrollbar('scrollTo',s);
+	});
+	$("#four >li").click(function () {
+		$(".right_con").fadeOut(1);
+		let l = $(this).index();
+		let s = 800*l;
+		$(".right_con").eq(3).stop().fadeIn(1000);
 		$('.demo-y').mCustomScrollbar('scrollTo',s);
 	});
 
