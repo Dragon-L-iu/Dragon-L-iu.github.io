@@ -30,6 +30,17 @@
     margin-left: 20px;
 }
 
+.nav .websit >li >a{
+    display: flex;
+    align-items: center;
+}
+
+.nav .websit img{
+    width: 18px;
+    margin-right: 5px;
+}
+
+
 .background {
     width: 100%;
     height: 650px;
@@ -68,6 +79,26 @@
     align-items: center;
     flex-direction: column;
     user-select: none;
+}
+
+@keyframes up {
+    from{
+        opacity: 1;
+
+    }
+    to{
+        opacity: 0;
+    }
+}
+
+.welcome >img{
+    width: 30px;
+    position: absolute;
+    top: 530px;
+    animation: up 1s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
 }
 
 .background_list {
@@ -291,5 +322,13 @@
     right: 0px;
     display: none;
     border-radius: 5px 0 0 5px;
+    text-align: center;
+}
+
+.totop_img{
+    width: 100%;
+    position: relative;
+    left: 0;
+    top: -10px;
 }
 
