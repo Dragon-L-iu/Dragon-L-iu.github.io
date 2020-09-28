@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>彩蛋</title>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+            background-color: black;
+        }
+        body{
+            overflow: hidden;
+        }
+        i {
+            width: 1px;
+            height: 80px;
+            background-color: white;
+            display: block;
+            position: absolute;
+            top: 0px;
+            left: 1px;
+        }
+
+        #c {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #c > img {
+            width: 80px;
+            animation: ship infinite linear 0.5s;
+        }
+
+        @keyframes ship {
+            0%, 100% {
+                transform: translateY(-5px);
+            }
+            50% {
+                transform: translateY(5px);
+            }
+        }
+
+        @keyframes star {
+            0% {
+                transform: translateY(0vh);
+            }
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+
+        i {
+            display: block;
+            width: 1px;
+            position: absolute;
+            animation: linear infinite star 1s;
+        }
+    </style>
+</head>
+<body>
+<div id="c">
+    <img src="img/ship1.png">
+</div>
+<script>
+    let c = document.getElementById("c");
+
+    function rand(a, b) {
+        return parseInt(Math.random() * (b - a) + a);
+    }
+
+    for (let j = 0; j < 150; j++) {
+        let i = document.createElement("i");
+        i.style.height = rand(10, 100) + "px";
+        i.style.top = rand(0, 100) + "vh";
+        i.style.animationDuration = rand(10,50)/10+"s";
+        let y = rand(0, 100);
+        if(y<47||y>53){
+            i.style.left = y + "%";
+            c.appendChild(i);
+        }
+
+    }
+
+
+</script>
+</body>
+</html>

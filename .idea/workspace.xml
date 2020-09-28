@@ -10,8 +10,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="CSS File" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -34,18 +34,18 @@
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\CODE\xbulider\mypage\img" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\CODE\xbulider\mypage\img" />
       <recent name="E:\CODE\xbulider\mypage\js" />
       <recent name="E:\CODE\xbulider\mypage\css" />
       <recent name="E:\CODE\xbulider\mypage" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\CODE\xbulider\mypage\img" />
-    </key>
   </component>
-  <component name="RunManager" selected="JavaScript Debug.index.html">
-    <configuration name="ar3.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/mypage/ar3.html" useBuiltInWebServerPort="true">
+  <component name="RunManager" selected="JavaScript Debug.ship.html">
+    <configuration name="art.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/mypage/art.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
     <configuration name="index1.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/mypage/index1.html" useBuiltInWebServerPort="true">
@@ -57,16 +57,16 @@
     <configuration name="resources1.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/mypage/resources1.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
-    <configuration name="resources.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/mypage/resources.html" useBuiltInWebServerPort="true">
+    <configuration name="ship.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/mypage/ship.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JavaScript Debug.ship.html" />
         <item itemvalue="JavaScript Debug.index.html" />
+        <item itemvalue="JavaScript Debug.art.html" />
         <item itemvalue="JavaScript Debug.index1.html" />
         <item itemvalue="JavaScript Debug.resources1.html" />
-        <item itemvalue="JavaScript Debug.resources.html" />
-        <item itemvalue="JavaScript Debug.ar3.html" />
       </list>
     </recent_temporary>
   </component>
@@ -84,7 +84,12 @@
       <workItem from="1594084529115" duration="435000" />
       <workItem from="1597454883266" duration="19124000" />
       <workItem from="1597539462847" duration="54830000" />
-      <workItem from="1597980959359" duration="4426000" />
+      <workItem from="1597980959359" duration="6172000" />
+      <workItem from="1598247092320" duration="3000" />
+      <workItem from="1598413421295" duration="29000" />
+      <workItem from="1598431330595" duration="6075000" />
+      <workItem from="1598773682966" duration="4223000" />
+      <workItem from="1601291438985" duration="7958000" />
     </task>
     <servers />
   </component>
@@ -96,54 +101,66 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="462" y="110" key="FileChooserDialogImpl/0.0.1366.738/-1440.-132.1440.870@0.0.1366.738" timestamp="1594084779175" />
-    <state width="659" height="213" key="GridCell.Tab.0.bottom" timestamp="1597984215878">
+    <state width="1345" height="213" key="GridCell.Tab.0.bottom" timestamp="1601292157446">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="659" height="213" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1597984215878" />
-    <state width="659" height="213" key="GridCell.Tab.0.center" timestamp="1597984215878">
+    <state width="1345" height="213" key="GridCell.Tab.0.bottom/0.0.1366.738/-1440.-132.1440.870@0.0.1366.738" timestamp="1601292157446" />
+    <state width="659" height="213" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1598437419633" />
+    <state width="1345" height="213" key="GridCell.Tab.0.center" timestamp="1601292157446">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="659" height="213" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1597984215878" />
-    <state width="659" height="213" key="GridCell.Tab.0.left" timestamp="1597984215878">
+    <state width="1345" height="213" key="GridCell.Tab.0.center/0.0.1366.738/-1440.-132.1440.870@0.0.1366.738" timestamp="1601292157446" />
+    <state width="659" height="213" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1598437419633" />
+    <state width="1345" height="213" key="GridCell.Tab.0.left" timestamp="1601292157446">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="659" height="213" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1597984215878" />
-    <state width="659" height="213" key="GridCell.Tab.0.right" timestamp="1597984215878">
+    <state width="1345" height="213" key="GridCell.Tab.0.left/0.0.1366.738/-1440.-132.1440.870@0.0.1366.738" timestamp="1601292157446" />
+    <state width="659" height="213" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1598437419633" />
+    <state width="1345" height="213" key="GridCell.Tab.0.right" timestamp="1601292157446">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="659" height="213" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1597984215878" />
-    <state width="659" height="213" key="GridCell.Tab.1.bottom" timestamp="1597984215879">
+    <state width="1345" height="213" key="GridCell.Tab.0.right/0.0.1366.738/-1440.-132.1440.870@0.0.1366.738" timestamp="1601292157446" />
+    <state width="659" height="213" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1598437419633" />
+    <state width="1345" height="213" key="GridCell.Tab.1.bottom" timestamp="1601292157447">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="659" height="213" key="GridCell.Tab.1.bottom/0.0.1366.738@0.0.1366.738" timestamp="1597984215879" />
-    <state width="659" height="213" key="GridCell.Tab.1.center" timestamp="1597984215878">
+    <state width="1345" height="213" key="GridCell.Tab.1.bottom/0.0.1366.738/-1440.-132.1440.870@0.0.1366.738" timestamp="1601292157447" />
+    <state width="659" height="213" key="GridCell.Tab.1.bottom/0.0.1366.738@0.0.1366.738" timestamp="1598437419633" />
+    <state width="1345" height="213" key="GridCell.Tab.1.center" timestamp="1601292157447">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="659" height="213" key="GridCell.Tab.1.center/0.0.1366.738@0.0.1366.738" timestamp="1597984215878" />
-    <state width="659" height="213" key="GridCell.Tab.1.left" timestamp="1597984215878">
+    <state width="1345" height="213" key="GridCell.Tab.1.center/0.0.1366.738/-1440.-132.1440.870@0.0.1366.738" timestamp="1601292157447" />
+    <state width="659" height="213" key="GridCell.Tab.1.center/0.0.1366.738@0.0.1366.738" timestamp="1598437419633" />
+    <state width="1345" height="213" key="GridCell.Tab.1.left" timestamp="1601292157447">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="659" height="213" key="GridCell.Tab.1.left/0.0.1366.738@0.0.1366.738" timestamp="1597984215878" />
-    <state width="659" height="213" key="GridCell.Tab.1.right" timestamp="1597984215878">
+    <state width="1345" height="213" key="GridCell.Tab.1.left/0.0.1366.738/-1440.-132.1440.870@0.0.1366.738" timestamp="1601292157447" />
+    <state width="659" height="213" key="GridCell.Tab.1.left/0.0.1366.738@0.0.1366.738" timestamp="1598437419633" />
+    <state width="1345" height="213" key="GridCell.Tab.1.right" timestamp="1601292157447">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="659" height="213" key="GridCell.Tab.1.right/0.0.1366.738@0.0.1366.738" timestamp="1597984215878" />
-    <state width="659" height="213" key="GridCell.Tab.2.bottom" timestamp="1597984215879">
+    <state width="1345" height="213" key="GridCell.Tab.1.right/0.0.1366.738/-1440.-132.1440.870@0.0.1366.738" timestamp="1601292157447" />
+    <state width="659" height="213" key="GridCell.Tab.1.right/0.0.1366.738@0.0.1366.738" timestamp="1598437419633" />
+    <state width="1345" height="213" key="GridCell.Tab.2.bottom" timestamp="1601292157448">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="659" height="213" key="GridCell.Tab.2.bottom/0.0.1366.738@0.0.1366.738" timestamp="1597984215879" />
-    <state width="659" height="213" key="GridCell.Tab.2.center" timestamp="1597984215879">
+    <state width="1345" height="213" key="GridCell.Tab.2.bottom/0.0.1366.738/-1440.-132.1440.870@0.0.1366.738" timestamp="1601292157448" />
+    <state width="659" height="213" key="GridCell.Tab.2.bottom/0.0.1366.738@0.0.1366.738" timestamp="1598437419633" />
+    <state width="1345" height="213" key="GridCell.Tab.2.center" timestamp="1601292157447">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="659" height="213" key="GridCell.Tab.2.center/0.0.1366.738@0.0.1366.738" timestamp="1597984215879" />
-    <state width="659" height="213" key="GridCell.Tab.2.left" timestamp="1597984215879">
+    <state width="1345" height="213" key="GridCell.Tab.2.center/0.0.1366.738/-1440.-132.1440.870@0.0.1366.738" timestamp="1601292157447" />
+    <state width="659" height="213" key="GridCell.Tab.2.center/0.0.1366.738@0.0.1366.738" timestamp="1598437419633" />
+    <state width="1345" height="213" key="GridCell.Tab.2.left" timestamp="1601292157447">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="659" height="213" key="GridCell.Tab.2.left/0.0.1366.738@0.0.1366.738" timestamp="1597984215879" />
-    <state width="659" height="213" key="GridCell.Tab.2.right" timestamp="1597984215879">
+    <state width="1345" height="213" key="GridCell.Tab.2.left/0.0.1366.738/-1440.-132.1440.870@0.0.1366.738" timestamp="1601292157447" />
+    <state width="659" height="213" key="GridCell.Tab.2.left/0.0.1366.738@0.0.1366.738" timestamp="1598437419633" />
+    <state width="1345" height="213" key="GridCell.Tab.2.right" timestamp="1601292157447">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="659" height="213" key="GridCell.Tab.2.right/0.0.1366.738@0.0.1366.738" timestamp="1597984215879" />
+    <state width="1345" height="213" key="GridCell.Tab.2.right/0.0.1366.738/-1440.-132.1440.870@0.0.1366.738" timestamp="1601292157447" />
+    <state width="659" height="213" key="GridCell.Tab.2.right/0.0.1366.738@0.0.1366.738" timestamp="1598437419633" />
     <state x="174" y="14" key="SettingsEditor" timestamp="1597460947584">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
@@ -152,10 +169,10 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="680" y="169" key="run.anything.popup/0.0.1366.738@0.0.1366.738" timestamp="1597739484856" />
-    <state x="687" y="59" width="672" height="678" key="search.everywhere.popup" timestamp="1597461455325">
+    <state x="687" y="59" width="672" height="678" key="search.everywhere.popup" timestamp="1598434634365">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="687" y="59" width="672" height="678" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1597461455325" />
+    <state x="687" y="59" width="672" height="678" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1598434634365" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/mypage$ar3_html.dat" NAME="ar3.html Coverage Results" MODIFIED="1588144485668" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="WipCoverageRunner" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

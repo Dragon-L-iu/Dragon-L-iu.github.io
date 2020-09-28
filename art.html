@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>文章</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+            list-style: none;
+        }
+        .photo{
+            width: 100%;
+            height: 600px;
+            background-image: url("img/ar_photo1.jpg");
+            background-size: cover;
+            background-position: center;
+            flex-direction: column;
+            user-select: none;
+        }
+        .photo >div{
+            background-color: rgba(0, 0, 0, 0.4);
+            width: inherit;
+            height: inherit;
+            position: relative;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .photo p{
+            font-size: 60px;
+            color: #fff;
+        }
+        .photo ul >li{
+            color: #999;
+            float: left;
+            margin: 10px 5px;
+            font-size: 18px;
+        }
+        .container{
+            width: 100%;
+            /*height: 1000px;*/
+            /*background-color: #6f42c1;*/
+        }
+        .container .index{
+            width: 95%;
+            height: inherit;
+            background-color: #ad9e40;
+            margin: 0 auto;
+            box-sizing: border-box;
+            padding: 0 10px;
+        }
+        .index >div{
+            width: 100%;
+            height: 350px;
+            background-color: #6f42c1;
+            margin: 5px 0;
+        }
+        .index >div >h1{
+            background-color: #858A97;
+            width: inherit;
+            height: 40px;
+            text-align: center;
+        }
+        .index_list{
+            margin: 2px 0;
+            background-color: #9a6e3a;
+
+        }
+
+        .index_list h2{
+            width: inherit;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .index_list >li{
+
+        }
+        .index_list p{
+            display: inline-block;
+            width: 85%;
+            height: 50px;
+            background-color: #6f42c1;
+            /*overflow: hidden;*/
+            word-break: break-word;
+        }
+        .index_list span{
+            display: inline-block;
+            width: 15%;
+            overflow: hidden;
+            text-align: right;
+        }
+        .foot{
+            width: 100%;
+            height: 40px;
+            background-color: #858A97;
+        }
+        .copyright {
+            font-size: 16px;
+            width: 100%;
+            height: 40px;
+            background-color: rgba(187, 187, 187, 0.5);
+            border-radius: 0 0 15px 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .copyright >span{
+            display: block;
+            margin: 0px 2px;
+        }
+        .totop {
+            width: 25px;
+            height: 80px;
+            background-color: rgba(187, 187, 187, 0.5);
+            position: fixed;
+            bottom: 40px;
+            right: 0px;
+            display: none;
+            border-radius: 5px 0 0 5px;
+            text-align: center;
+        }
+
+        .totop_img{
+            width: 100%;
+            position: relative;
+            left: 0;
+            top: -10px;
+        }
+    </style>
+    <script src="js/jquery-3.5.1.js"></script>
+</head>
+<body>
+<div class="photo">
+    <div>
+        <p>My Article</p>
+        <ul>
+            <li><a>java</a></li>
+            <li><a>linux</a></li>
+            <li><a>算法</a></li>
+            <li><a>其它</a></li>
+        </ul>
+    </div>
+</div>
+<div class="container">
+    <div class="index">
+        <div>
+
+            <h1>java</h1>
+            <ul class="index_list">
+                <li><a><h2>title</h2><p>explainexplainexplainexplainexplainexplainexplainexplainexplainexplainexplainexplainexplainexplainexplainexplainexplainexplainexplainexplainexplainexplainexplainexplainexplainexplainexplainexplainexplainexplainexplainexplainexplainexplain</p><span>time</span></a></li>
+                <li><a><h2>title</h2><p>explain</p><span>time</span></a></li>
+                <li><a><h2>title</h2><p>explain</p><span>time</span></a></li>
+            </ul>
+        </div>
+        <div>
+            <h1>linux</h1>
+            <ul class="index_list">
+                <li><a><h2>title</h2><p>explain</p><span>time</span></a></li>
+                <li><a><h2>title</h2><p>explain</p><span>time</span></a></li>
+                <li><a><h2>title</h2><p>explain</p><span>time</span></a></li>
+            </ul>
+        </div>
+        <div>
+            <h1>算法</h1>
+            <ul class="index_list">
+                <li><a><h2>title</h2><p>explain</p><span>time</span></a></li>
+                <li><a><h2>title</h2><p>explain</p><span>time</span></a></li>
+                <li><a><h2>title</h2><p>explain</p><span>time</span></a></li>
+            </ul>
+        </div>
+        <div>
+            <h1>其它</h1>
+            <ul class="index_list">
+                <li><a><h2>title</h2><p>explain</p><span>time</span></a></li>
+                <li><a><h2>title</h2><p>explain</p><span>time</span></a></li>
+                <li><a><h2>title</h2><p>explain</p><span>time</span></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="foot">
+    <div class="copyright">
+        <span>Copyright</span>
+        <span>@</span>
+        <span>DRAGON</span>
+        <span>2020</span>
+    </div>
+    <div class="totop">
+        <img class="totop_img" src="img/icon_up.png">
+    </div>
+</div>
+<script>
+
+</script>
+</body>
+</html>
